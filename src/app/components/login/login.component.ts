@@ -8,6 +8,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { AuthService } from '../../shared/services/auth.service';
+import { AppConst } from '../../shared/app-data.constant';
+import { StorageService } from '../../shared/services/storage.service';
 
 @Component({
   selector: 'app-login',
@@ -32,12 +34,19 @@ export class LoginComponent {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private storageService: StorageService
   ) {
     this.loginForm = this.fb.group({
       username: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
+  }
+
+  ngOnInit(): void {
+    if (this.authService.isLoggedIn) {
+      this.router.navigate(['/dashboard']);
+    }
   }
 
   onSubmit() {
@@ -53,15 +62,14 @@ export class LoginComponent {
       this.authService.login(payload).subscribe({
         next: (resp) => {
           if (resp && resp.user && resp.token) {
-            localStorage.setItem('currentUser', resp.user);
-            localStorage.setItem('token', resp.token);
+            this.storageService.set(AppConst.currentUserKey, resp.user);
+            this.storageService.set(AppConst.token, resp.token);
+            this.router.navigate(['/dashboard']);
           }
         }, error: error => {
           this.showErrorMsg = true;
         }
       })
-
-      this.router.navigate(['/']);
     }
   }
 
