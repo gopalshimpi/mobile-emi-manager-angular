@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { RequestService } from '../requests/request.service';
-import { ApiUrl, AppConst } from '../app-data.constant';
+import { ApiUrl } from '../app-data.constant';
 import { StorageService } from './storage.service';
+import { AppConst } from '../app-data.constant';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,16 @@ export class AuthService {
     return this.requestService.post(`${ApiUrl.backendUri}/${ApiUrl.login}`, user);
   }
 
-  get isLoggedIn() {
-    return (this.storageService.get(AppConst.currentUserKey) && this.storageService.get(AppConst.token))
+  logout() {
+    this.storageService.remove(AppConst.currentUserKey);
+    this.storageService.remove(AppConst.token);
+  }
+
+  get isLoggedIn(): boolean {
+    return !!this.storageService.get(AppConst.token);
+  }
+
+  get currentUser() {
+    return this.storageService.get(AppConst.currentUserKey);
   }
 }

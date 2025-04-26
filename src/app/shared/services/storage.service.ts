@@ -23,11 +23,8 @@ export class StorageService {
    * @returns {any}
    */
   get(key: string): any {
-    let item = null;
-    if (localStorage.getItem(key)) {
-      item = JSON.parse(localStorage.getItem(key) as any);
-    }
-    return item;
+    const item = localStorage.getItem(key);
+    return item ? JSON.parse(item) : null;
   }
 
   /**
@@ -35,7 +32,7 @@ export class StorageService {
    * @param {string} key
    * @returns {void}
    */
-  delete(key: string): void {
+  remove(key: string): void {
     localStorage.removeItem(key);
   }
 }

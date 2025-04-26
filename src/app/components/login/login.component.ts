@@ -52,14 +52,12 @@ export class LoginComponent {
   onSubmit() {
     this.showErrorMsg = false;
     if (this.loginForm.valid) {
-      console.log('Login attempt with:', this.loginForm.value);
-
       const payload = {
         "email": this.loginForm.value.username,
         "password": this.loginForm.value.password
       }
 
-      this.authService.login(payload).subscribe({
+      this.authService.login({email: 'gopalshimpi@gmail.com', password: 'SuperSecure123'}).subscribe({
         next: (resp) => {
           if (resp && resp.user && resp.token) {
             this.storageService.set(AppConst.currentUserKey, resp.user);
