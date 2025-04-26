@@ -28,6 +28,9 @@
             Password must be at least 6 characters
           </mat-error>
         </mat-form-field>
+        <mat-error *ngIf="showErrorMsg">
+          "Email and/or password don't match with any of our records"
+        </mat-error>
 
         <button mat-raised-button color="primary" type="submit" 
                 class="full-width" [disabled]="!loginForm.valid">

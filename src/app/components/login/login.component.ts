@@ -7,6 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
+import { AuthService } from '../../shared/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -26,10 +27,12 @@ import { MatIconModule } from '@angular/material/icon';
 export class LoginComponent {
   loginForm: FormGroup;
   hidePassword = true;
+  showErrorMsg = false;
 
   constructor(
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {
     this.loginForm = this.fb.group({
       username: ['', [Validators.required]],
@@ -38,9 +41,26 @@ export class LoginComponent {
   }
 
   onSubmit() {
+    this.showErrorMsg = false;
     if (this.loginForm.valid) {
       console.log('Login attempt with:', this.loginForm.value);
-      // TODO: Implement actual login logic here
+
+      const payload = {
+        "email": this.loginForm.value.username,
+        "password": this.loginForm.value.password
+      }
+
+      this.authService.login(payload).subscribe({
+        next: (resp) => {
+          if (resp && resp.user && resp.token) {
+            localStorage.setItem('currentUser', resp.user);
+            localStorage.setItem('token', resp.token);
+          }
+        }, error: error => {
+          this.showErrorMsg = true;
+        }
+      })
+
       this.router.navigate(['/']);
     }
   }
