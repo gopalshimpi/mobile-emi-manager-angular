@@ -20,7 +20,7 @@ export class DashboardComponent {
   isSuperAdmin = false;
 
   constructor(
-    private router: Router,
+    public router: Router,
     private authService: AuthService,
   ) {}
 
