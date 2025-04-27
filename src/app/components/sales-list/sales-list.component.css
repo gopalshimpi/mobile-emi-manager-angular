@@ -1,0 +1,53 @@
+.sales-list-container {
+  padding: 20px;
+}
+
+mat-card {
+  margin: 20px auto;
+  max-width: 1200px;
+}
+
+mat-card-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+table {
+  width: 100%;
+}
+
+.mat-column-actions {
+  width: 80px;
+  text-align: center;
+}
+
+.mat-column-price,
+.mat-column-down_payment_amount,
+.mat-column-pending_amount,
+.mat-column-emi_amount {
+  text-align: right;
+  padding-right: 24px;
+}
+
+.mat-column-number_of_emis {
+  text-align: center;
+}
+
+.mat-elevation-z8 {
+  box-shadow: 0 5px 5px -3px rgba(0,0,0,.2), 0 8px 10px 1px rgba(0,0,0,.14), 0 3px 14px 2px rgba(0,0,0,.12);
+}
+
+@media (max-width: 768px) {
+  .sales-list-container {
+    padding: 10px;
+  }
+  
+  mat-card {
+    margin: 10px auto;
+  }
+} 

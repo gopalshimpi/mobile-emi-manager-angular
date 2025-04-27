@@ -1,0 +1,77 @@
+<div class="sales-list-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Sales Records</mat-card-title>
+      <div class="spacer"></div>
+      <button mat-raised-button color="primary" (click)="createNewRecord()">
+        <mat-icon>add</mat-icon>
+        New Record
+      </button>
+    </mat-card-header>
+
+    <mat-card-content>
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+        <!-- Customer Name Column -->
+        <ng-container matColumnDef="customer_name">
+          <th mat-header-cell *matHeaderCellDef>Customer Name</th>
+          <td mat-cell *matCellDef="let record">{{record.customer_name}}</td>
+        </ng-container>
+
+        <!-- Mobile Model Column -->
+        <ng-container matColumnDef="mobile_model">
+          <th mat-header-cell *matHeaderCellDef>Mobile Model</th>
+          <td mat-cell *matCellDef="let record">{{record.mobile_model}}</td>
+        </ng-container>
+
+        <!-- Price Column -->
+        <ng-container matColumnDef="price">
+          <th mat-header-cell *matHeaderCellDef>Price</th>
+          <td mat-cell *matCellDef="let record">{{record.price | currency:'INR'}}</td>
+        </ng-container>
+
+        <!-- Down Payment Column -->
+        <ng-container matColumnDef="down_payment_amount">
+          <th mat-header-cell *matHeaderCellDef>Down Payment</th>
+          <td mat-cell *matCellDef="let record">{{record.down_payment_amount | currency:'INR'}}</td>
+        </ng-container>
+
+        <!-- Pending Amount Column -->
+        <ng-container matColumnDef="pending_amount">
+          <th mat-header-cell *matHeaderCellDef>Pending Amount</th>
+          <td mat-cell *matCellDef="let record">{{record.pending_amount | currency:'INR'}}</td>
+        </ng-container>
+
+        <!-- Number of EMIs Column -->
+        <ng-container matColumnDef="number_of_emis">
+          <th mat-header-cell *matHeaderCellDef>No. of EMIs</th>
+          <td mat-cell *matCellDef="let record">{{record.number_of_emis}}</td>
+        </ng-container>
+
+        <!-- EMI Amount Column -->
+        <ng-container matColumnDef="emi_amount">
+          <th mat-header-cell *matHeaderCellDef>EMI Amount</th>
+          <td mat-cell *matCellDef="let record">{{record.emi_amount | currency:'INR'}}</td>
+        </ng-container>
+
+        <!-- EMI Due Date Column -->
+        <ng-container matColumnDef="emi_due_date">
+          <th mat-header-cell *matHeaderCellDef>EMI Due Date</th>
+          <td mat-cell *matCellDef="let record">{{record.emi_due_date | date:'mediumDate'}}</td>
+        </ng-container>
+
+        <!-- Actions Column -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let record">
+            <button mat-icon-button color="primary" (click)="viewDetails(record)">
+              <mat-icon>visibility</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </mat-card-content>
+  </mat-card>
+</div> 

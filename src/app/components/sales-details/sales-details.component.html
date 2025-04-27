@@ -1,0 +1,72 @@
+<div class="sales-details-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Sales Record Details</mat-card-title>
+      <div class="spacer"></div>
+      <button mat-icon-button (click)="closeDialog()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div class="details-grid">
+        <div class="detail-item">
+          <span class="label">Customer Name:</span>
+          <span class="value">{{salesRecord.customer_name}}</span>
+        </div>
+        <div class="detail-item">
+          <span class="label">Mobile Model:</span>
+          <span class="value">{{salesRecord.mobile_model}}</span>
+        </div>
+        <div class="detail-item">
+          <span class="label">IMEI Number:</span>
+          <span class="value">{{salesRecord.mobile_imei_number}}</span>
+        </div>
+        <div class="detail-item">
+          <span class="label">Customer Mobile:</span>
+          <span class="value">{{salesRecord.customer_mobile_number}}</span>
+        </div>
+        <div class="detail-item">
+          <span class="label">Date of Purchase:</span>
+          <span class="value">{{salesRecord.date_of_purchase | date:'mediumDate'}}</span>
+        </div>
+        <div class="detail-item">
+          <span class="label">PAN Number:</span>
+          <span class="value">{{salesRecord.pan_number}}</span>
+        </div>
+        <div class="detail-item">
+          <span class="label">Aadhar Number:</span>
+          <span class="value">{{salesRecord.aadhar_number}}</span>
+        </div>
+        <div class="detail-item">
+          <span class="label">Price:</span>
+          <span class="value">{{salesRecord.price | currency:'INR'}}</span>
+        </div>
+        <div class="detail-item">
+          <span class="label">Down Payment:</span>
+          <span class="value">{{salesRecord.down_payment_amount | currency:'INR'}}</span>
+        </div>
+        <div class="detail-item">
+          <span class="label">Pending Amount:</span>
+          <span class="value">{{salesRecord.pending_amount | currency:'INR'}}</span>
+        </div>
+        <div class="detail-item">
+          <span class="label">Number of EMIs:</span>
+          <span class="value">{{salesRecord.number_of_emis}}</span>
+        </div>
+        <div class="detail-item">
+          <span class="label">Processing Fees:</span>
+          <span class="value">{{salesRecord.processing_fees | currency:'INR'}}</span>
+        </div>
+        <div class="detail-item">
+          <span class="label">EMI Amount:</span>
+          <span class="value">{{salesRecord.emi_amount | currency:'INR'}}</span>
+        </div>
+        <div class="detail-item">
+          <span class="label">EMI Due Date:</span>
+          <span class="value">{{salesRecord.emi_due_date | date:'mediumDate'}}</span>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div> 
