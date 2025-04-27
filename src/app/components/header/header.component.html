@@ -1,5 +1,17 @@
 <mat-toolbar color="primary">
   <span class="app-title">Mobile EMI Manager</span>
+  
+  <nav class="nav-links">
+    <a mat-button routerLink="/dashboard" routerLinkActive="active">
+      <mat-icon>dashboard</mat-icon>
+      Dashboard
+    </a>
+    <a mat-button routerLink="/sales" routerLinkActive="active">
+      <mat-icon>list</mat-icon>
+      Sales Records
+    </a>
+  </nav>
+  
   <span class="spacer"></span>
   
   <button mat-button [matMenuTriggerFor]="menu">
@@ -8,14 +20,6 @@
   </button>
   
   <mat-menu #menu="matMenu">
-    <button mat-menu-item (click)="navigateToDashboard()">
-      <mat-icon>dashboard</mat-icon>
-      <span>Dashboard</span>
-    </button>
-    <button mat-menu-item (click)="navigateToSales()">
-      <mat-icon>list</mat-icon>
-      <span>Sales Records</span>
-    </button>
     <button *ngIf="isSuperAdmin" mat-menu-item (click)="navigateToCreateAdmin()">
       <mat-icon>person_add</mat-icon>
       <span>Create Admin</span>
