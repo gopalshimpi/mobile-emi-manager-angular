@@ -1,0 +1,28 @@
+<mat-toolbar color="primary">
+  <span class="app-title">Mobile EMI Manager</span>
+  <span class="spacer"></span>
+  
+  <button mat-button [matMenuTriggerFor]="menu">
+    <mat-icon>account_circle</mat-icon>
+    {{ user?.username }}
+  </button>
+  
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="navigateToDashboard()">
+      <mat-icon>dashboard</mat-icon>
+      <span>Dashboard</span>
+    </button>
+    <button mat-menu-item (click)="navigateToSales()">
+      <mat-icon>list</mat-icon>
+      <span>Sales Records</span>
+    </button>
+    <button *ngIf="isSuperAdmin" mat-menu-item (click)="navigateToCreateAdmin()">
+      <mat-icon>person_add</mat-icon>
+      <span>Create Admin</span>
+    </button>
+    <button mat-menu-item (click)="logout()">
+      <mat-icon>exit_to_app</mat-icon>
+      <span>Logout</span>
+    </button>
+  </mat-menu>
+</mat-toolbar> 
