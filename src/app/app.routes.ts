@@ -24,10 +24,6 @@ export const routes: Routes = [
     component: SalesListComponent 
   },
   { 
-    path: 'sales/create', 
-    component: SalesRecordComponent 
-  },
-  { 
     path: 'sales/:id', 
     component: SalesDetailsComponent 
   },

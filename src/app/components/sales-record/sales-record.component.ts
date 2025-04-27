@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, Optional } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -40,14 +40,18 @@ export class SalesRecordComponent implements OnInit {
   isEditMode = false;
   recordId: string | null = null;
   isLoading = false;
+  isDialog = false;
 
   constructor(
     private fb: FormBuilder,
     private salesService: SalesService,
     private snackBar: MatSnackBar,
-    public dialogRef: MatDialogRef<SalesRecordComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { recordId?: string }
+    private router: Router,
+    private route: ActivatedRoute,
+    @Optional() public dialogRef: MatDialogRef<SalesRecordComponent>,
+    @Optional() @Inject(MAT_DIALOG_DATA) public data: { recordId?: string }
   ) {
+    this.isDialog = !!dialogRef;
     this.salesForm = this.fb.group({
       customer_name: ['', Validators.required],
       mobile_imei_number: ['', [Validators.required, Validators.pattern(/^\d{15}$/)]],
@@ -71,10 +75,16 @@ export class SalesRecordComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.data?.recordId) {
+    // Check for recordId in route params or dialog data
+    const routeId = this.route.snapshot.queryParams['id'];
+    const dialogId = this.data?.recordId;
+    
+    if (routeId || dialogId) {
       this.isEditMode = true;
-      this.recordId = this.data.recordId;
-      this.loadSalesRecord(this.recordId);
+      this.recordId = routeId || dialogId;
+      if (this.recordId) {
+        this.loadSalesRecord(this.recordId);
+      }
     }
   }
 
@@ -117,7 +127,11 @@ export class SalesRecordComponent implements OnInit {
         this.salesService.updateSalesRecord(parseInt(this.recordId), formData).subscribe({
           next: () => {
             this.showSnackBar('Sales record updated successfully', 'success');
-            this.dialogRef.close(true);
+            if (this.isDialog) {
+              this.dialogRef?.close(true);
+            } else {
+              this.router.navigate(['/sales']);
+            }
           },
           error: (error) => {
             this.showErrorMsg = true;
@@ -129,7 +143,11 @@ export class SalesRecordComponent implements OnInit {
         this.salesService.createSalesRecord(formData).subscribe({
           next: () => {
             this.showSnackBar('Sales record created successfully', 'success');
-            this.dialogRef.close(true);
+            if (this.isDialog) {
+              this.dialogRef?.close(true);
+            } else {
+              this.router.navigate(['/sales']);
+            }
           },
           error: (error) => {
             this.showErrorMsg = true;
@@ -142,7 +160,11 @@ export class SalesRecordComponent implements OnInit {
   }
 
   onCancel() {
-    this.dialogRef.close();
+    if (this.isDialog) {
+      this.dialogRef?.close();
+    } else {
+      this.router.navigate(['/sales']);
+    }
   }
 
   private showSnackBar(message: string, type: 'success' | 'error') {
