@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -12,6 +12,7 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { SalesService } from '../../shared/services/sales.service';
 import { SalesRecord } from '../../shared/models/sales-record.model';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-sales-record',
@@ -26,7 +27,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatDatepickerModule,
     MatNativeDateModule,
     MatSnackBarModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatDialogModule
   ],
   templateUrl: './sales-record.component.html',
   styleUrls: ['./sales-record.component.scss']
@@ -42,9 +44,9 @@ export class SalesRecordComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private salesService: SalesService,
-    public router: Router,
-    private route: ActivatedRoute,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    public dialogRef: MatDialogRef<SalesRecordComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: { recordId?: string }
   ) {
     this.salesForm = this.fb.group({
       customer_name: ['', Validators.required],
@@ -63,16 +65,15 @@ export class SalesRecordComponent implements OnInit {
       emi_due_date: ['', Validators.required]
     });
 
-    // Subscribe to form value changes to calculate pending and EMI amounts
     this.salesForm.valueChanges.subscribe(() => {
       this.calculateAmounts();
     });
   }
 
   ngOnInit() {
-    this.recordId = this.route.snapshot.queryParamMap.get('id');
-    if (this.recordId) {
+    if (this.data?.recordId) {
       this.isEditMode = true;
+      this.recordId = this.data.recordId;
       this.loadSalesRecord(this.recordId);
     }
   }
@@ -116,7 +117,7 @@ export class SalesRecordComponent implements OnInit {
         this.salesService.updateSalesRecord(parseInt(this.recordId), formData).subscribe({
           next: () => {
             this.showSnackBar('Sales record updated successfully', 'success');
-            this.router.navigate(['/sales']);
+            this.dialogRef.close(true);
           },
           error: (error) => {
             this.showErrorMsg = true;
@@ -128,7 +129,7 @@ export class SalesRecordComponent implements OnInit {
         this.salesService.createSalesRecord(formData).subscribe({
           next: () => {
             this.showSnackBar('Sales record created successfully', 'success');
-            this.router.navigate(['/sales']);
+            this.dialogRef.close(true);
           },
           error: (error) => {
             this.showErrorMsg = true;
@@ -138,6 +139,10 @@ export class SalesRecordComponent implements OnInit {
         });
       }
     }
+  }
+
+  onCancel() {
+    this.dialogRef.close();
   }
 
   private showSnackBar(message: string, type: 'success' | 'error') {

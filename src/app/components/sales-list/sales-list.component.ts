@@ -12,6 +12,7 @@ import { SalesService } from '../../shared/services/sales.service';
 import { SalesRecord } from '../../shared/models/sales-record.model';
 import { SalesDetailsComponent } from '../sales-details/sales-details.component';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+import { SalesRecordComponent } from '../sales-record/sales-record.component';
 
 @Component({
   selector: 'app-sales-list',
@@ -85,14 +86,24 @@ export class SalesListComponent implements OnInit {
   }
 
   editRecord(record: SalesRecord) {
-    this.router.navigate(['/sales/create'], { queryParams: { id: record.id } });
+    const dialogRef = this.dialog.open(SalesRecordComponent, {
+      width: '800px',
+      maxWidth: '90vw',
+      data: { recordId: record.id?.toString() }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.loadSalesRecords();
+      }
+    });
   }
 
   deleteRecord(record: SalesRecord) {
     if (!record.id) return;
     
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      width: '400px',
+      width: '500px',
       data: {
         title: 'Confirm Delete',
         message: `Are you sure you want to delete the sales record for ${record.customer_name}?`,
@@ -118,7 +129,16 @@ export class SalesListComponent implements OnInit {
   }
 
   createNewRecord() {
-    this.router.navigate(['/sales/create']);
+    const dialogRef = this.dialog.open(SalesRecordComponent, {
+      width: '800px',
+      maxWidth: '90vw'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.loadSalesRecords();
+      }
+    });
   }
 
   private showSnackBar(message: string, type: 'success' | 'error') {

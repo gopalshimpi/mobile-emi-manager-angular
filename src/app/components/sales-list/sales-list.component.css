@@ -4,7 +4,8 @@
 
 mat-card {
   margin: 20px auto;
-  max-width: 1200px;
+  max-width: 1400px;
+  width: 100%;
 }
 
 mat-card-header {
@@ -19,11 +20,17 @@ mat-card-header {
 
 table {
   width: 100%;
+  min-width: 1200px;
 }
 
 .mat-column-actions {
-  width: 80px;
+  width: 120px;
   text-align: center;
+  white-space: nowrap;
+}
+
+.mat-column-actions button {
+  margin: 0 4px;
 }
 
 .mat-column-price,
@@ -32,10 +39,24 @@ table {
 .mat-column-emi_amount {
   text-align: right;
   padding-right: 24px;
+  width: 120px;
 }
 
 .mat-column-number_of_emis {
   text-align: center;
+  width: 100px;
+}
+
+.mat-column-customer_name {
+  min-width: 150px;
+}
+
+.mat-column-mobile_model {
+  min-width: 150px;
+}
+
+.mat-column-emi_due_date {
+  min-width: 120px;
 }
 
 .mat-elevation-z8 {
@@ -49,5 +70,13 @@ table {
   
   mat-card {
     margin: 10px auto;
+  }
+
+  .mat-column-actions {
+    width: 100px;
+  }
+
+  .mat-column-actions button {
+    margin: 0 2px;
   }
 } 

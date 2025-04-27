@@ -54,7 +54,7 @@ export class SalesDetailsComponent implements OnInit {
     if (!this.salesRecord.id) return;
     
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      width: '400px',
+      width: '500px',
       data: {
         title: 'Confirm Delete',
         message: `Are you sure you want to delete the sales record for ${this.salesRecord.customer_name}?`,

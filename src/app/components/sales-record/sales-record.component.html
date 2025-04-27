@@ -1,150 +1,147 @@
 <div class="sales-record-container">
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title>{{ isEditMode ? 'Edit' : 'Create' }} Sales Record</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <div *ngIf="isLoading" class="loading-spinner">
-        <mat-spinner diameter="40"></mat-spinner>
-        <p>Loading sales record...</p>
+  <h2 mat-dialog-title>{{ isEditMode ? 'Edit' : 'Create' }} Sales Record</h2>
+  
+  <mat-dialog-content>
+    <div *ngIf="isLoading" class="loading-spinner">
+      <mat-spinner diameter="40"></mat-spinner>
+      <p>Loading sales record...</p>
+    </div>
+
+    <form *ngIf="!isLoading" [formGroup]="salesForm" (ngSubmit)="onSubmit()" class="sales-form">
+      <div class="form-row">
+        <mat-form-field appearance="outline">
+          <mat-label>Customer Name</mat-label>
+          <input matInput formControlName="customer_name" placeholder="Enter customer name">
+          <mat-error *ngIf="customer_name?.invalid && customer_name?.touched">
+            Customer name is required
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Mobile IMEI Number</mat-label>
+          <input matInput formControlName="mobile_imei_number" placeholder="Enter 15-digit IMEI number">
+          <mat-error *ngIf="mobile_imei_number?.invalid && mobile_imei_number?.touched">
+            Please enter a valid 15-digit IMEI number
+          </mat-error>
+        </mat-form-field>
       </div>
 
-      <form *ngIf="!isLoading" [formGroup]="salesForm" (ngSubmit)="onSubmit()" class="sales-form">
-        <div class="form-row">
-          <mat-form-field appearance="outline">
-            <mat-label>Customer Name</mat-label>
-            <input matInput formControlName="customer_name" placeholder="Enter customer name">
-            <mat-error *ngIf="customer_name?.invalid && customer_name?.touched">
-              Customer name is required
-            </mat-error>
-          </mat-form-field>
+      <div class="form-row">
+        <mat-form-field appearance="outline">
+          <mat-label>Customer Mobile Number</mat-label>
+          <input matInput formControlName="customer_mobile_number" placeholder="Enter 10-digit mobile number">
+          <mat-error *ngIf="customer_mobile_number?.invalid && customer_mobile_number?.touched">
+            Please enter a valid 10-digit mobile number
+          </mat-error>
+        </mat-form-field>
 
-          <mat-form-field appearance="outline">
-            <mat-label>Mobile IMEI Number</mat-label>
-            <input matInput formControlName="mobile_imei_number" placeholder="Enter 15-digit IMEI number">
-            <mat-error *ngIf="mobile_imei_number?.invalid && mobile_imei_number?.touched">
-              Please enter a valid 15-digit IMEI number
-            </mat-error>
-          </mat-form-field>
-        </div>
+        <mat-form-field appearance="outline">
+          <mat-label>Mobile Model</mat-label>
+          <input matInput formControlName="mobile_model" placeholder="Enter mobile model">
+          <mat-error *ngIf="mobile_model?.invalid && mobile_model?.touched">
+            Mobile model is required
+          </mat-error>
+        </mat-form-field>
+      </div>
 
-        <div class="form-row">
-          <mat-form-field appearance="outline">
-            <mat-label>Customer Mobile Number</mat-label>
-            <input matInput formControlName="customer_mobile_number" placeholder="Enter 10-digit mobile number">
-            <mat-error *ngIf="customer_mobile_number?.invalid && customer_mobile_number?.touched">
-              Please enter a valid 10-digit mobile number
-            </mat-error>
-          </mat-form-field>
+      <div class="form-row">
+        <mat-form-field appearance="outline">
+          <mat-label>Date of Purchase</mat-label>
+          <input matInput [matDatepicker]="purchaseDatePicker" formControlName="date_of_purchase">
+          <mat-datepicker-toggle matSuffix [for]="purchaseDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #purchaseDatePicker></mat-datepicker>
+          <mat-error *ngIf="date_of_purchase?.invalid && date_of_purchase?.touched">
+            Date of purchase is required
+          </mat-error>
+        </mat-form-field>
 
-          <mat-form-field appearance="outline">
-            <mat-label>Mobile Model</mat-label>
-            <input matInput formControlName="mobile_model" placeholder="Enter mobile model">
-            <mat-error *ngIf="mobile_model?.invalid && mobile_model?.touched">
-              Mobile model is required
-            </mat-error>
-          </mat-form-field>
-        </div>
+        <mat-form-field appearance="outline">
+          <mat-label>PAN Number</mat-label>
+          <input matInput formControlName="pan_number" placeholder="Enter PAN number">
+          <mat-error *ngIf="pan_number?.invalid && pan_number?.touched">
+            Please enter a valid PAN number
+          </mat-error>
+        </mat-form-field>
+      </div>
 
-        <div class="form-row">
-          <mat-form-field appearance="outline">
-            <mat-label>Date of Purchase</mat-label>
-            <input matInput [matDatepicker]="purchaseDatePicker" formControlName="date_of_purchase">
-            <mat-datepicker-toggle matSuffix [for]="purchaseDatePicker"></mat-datepicker-toggle>
-            <mat-datepicker #purchaseDatePicker></mat-datepicker>
-            <mat-error *ngIf="date_of_purchase?.invalid && date_of_purchase?.touched">
-              Date of purchase is required
-            </mat-error>
-          </mat-form-field>
+      <div class="form-row">
+        <mat-form-field appearance="outline">
+          <mat-label>Aadhar Number</mat-label>
+          <input matInput formControlName="aadhar_number" placeholder="Enter 12-digit Aadhar number">
+          <mat-error *ngIf="aadhar_number?.invalid && aadhar_number?.touched">
+            Please enter a valid 12-digit Aadhar number
+          </mat-error>
+        </mat-form-field>
 
-          <mat-form-field appearance="outline">
-            <mat-label>PAN Number</mat-label>
-            <input matInput formControlName="pan_number" placeholder="Enter PAN number">
-            <mat-error *ngIf="pan_number?.invalid && pan_number?.touched">
-              Please enter a valid PAN number
-            </mat-error>
-          </mat-form-field>
-        </div>
+        <mat-form-field appearance="outline">
+          <mat-label>Price</mat-label>
+          <input matInput type="number" formControlName="price" placeholder="Enter price">
+          <mat-error *ngIf="price?.invalid && price?.touched">
+            Please enter a valid price
+          </mat-error>
+        </mat-form-field>
+      </div>
 
-        <div class="form-row">
-          <mat-form-field appearance="outline">
-            <mat-label>Aadhar Number</mat-label>
-            <input matInput formControlName="aadhar_number" placeholder="Enter 12-digit Aadhar number">
-            <mat-error *ngIf="aadhar_number?.invalid && aadhar_number?.touched">
-              Please enter a valid 12-digit Aadhar number
-            </mat-error>
-          </mat-form-field>
+      <div class="form-row">
+        <mat-form-field appearance="outline">
+          <mat-label>Down Payment Amount</mat-label>
+          <input matInput type="number" formControlName="down_payment_amount" placeholder="Enter down payment amount">
+          <mat-error *ngIf="down_payment_amount?.invalid && down_payment_amount?.touched">
+            Please enter a valid down payment amount
+          </mat-error>
+        </mat-form-field>
 
-          <mat-form-field appearance="outline">
-            <mat-label>Price</mat-label>
-            <input matInput type="number" formControlName="price" placeholder="Enter price">
-            <mat-error *ngIf="price?.invalid && price?.touched">
-              Please enter a valid price
-            </mat-error>
-          </mat-form-field>
-        </div>
+        <mat-form-field appearance="outline">
+          <mat-label>Pending Amount</mat-label>
+          <input matInput type="number" formControlName="pending_amount" placeholder="Pending amount" readonly>
+        </mat-form-field>
+      </div>
 
-        <div class="form-row">
-          <mat-form-field appearance="outline">
-            <mat-label>Down Payment Amount</mat-label>
-            <input matInput type="number" formControlName="down_payment_amount" placeholder="Enter down payment amount">
-            <mat-error *ngIf="down_payment_amount?.invalid && down_payment_amount?.touched">
-              Please enter a valid down payment amount
-            </mat-error>
-          </mat-form-field>
+      <div class="form-row">
+        <mat-form-field appearance="outline">
+          <mat-label>Number of EMIs</mat-label>
+          <input matInput type="number" formControlName="number_of_emis" placeholder="Enter number of EMIs">
+          <mat-error *ngIf="number_of_emis?.invalid && number_of_emis?.touched">
+            Please enter a valid number of EMIs
+          </mat-error>
+        </mat-form-field>
 
-          <mat-form-field appearance="outline">
-            <mat-label>Pending Amount</mat-label>
-            <input matInput type="number" formControlName="pending_amount" placeholder="Pending amount" readonly>
-          </mat-form-field>
-        </div>
+        <mat-form-field appearance="outline">
+          <mat-label>Processing Fees</mat-label>
+          <input matInput type="number" formControlName="processing_fees" placeholder="Enter processing fees">
+          <mat-error *ngIf="processing_fees?.invalid && processing_fees?.touched">
+            Please enter a valid processing fees amount
+          </mat-error>
+        </mat-form-field>
+      </div>
 
-        <div class="form-row">
-          <mat-form-field appearance="outline">
-            <mat-label>Number of EMIs</mat-label>
-            <input matInput type="number" formControlName="number_of_emis" placeholder="Enter number of EMIs">
-            <mat-error *ngIf="number_of_emis?.invalid && number_of_emis?.touched">
-              Please enter a valid number of EMIs
-            </mat-error>
-          </mat-form-field>
+      <div class="form-row">
+        <mat-form-field appearance="outline">
+          <mat-label>EMI Amount</mat-label>
+          <input matInput type="number" formControlName="emi_amount" placeholder="EMI amount" readonly>
+        </mat-form-field>
 
-          <mat-form-field appearance="outline">
-            <mat-label>Processing Fees</mat-label>
-            <input matInput type="number" formControlName="processing_fees" placeholder="Enter processing fees">
-            <mat-error *ngIf="processing_fees?.invalid && processing_fees?.touched">
-              Please enter a valid processing fees amount
-            </mat-error>
-          </mat-form-field>
-        </div>
+        <mat-form-field appearance="outline">
+          <mat-label>EMI Due Date</mat-label>
+          <input matInput [matDatepicker]="emiDatePicker" formControlName="emi_due_date">
+          <mat-datepicker-toggle matSuffix [for]="emiDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #emiDatePicker></mat-datepicker>
+          <mat-error *ngIf="emi_due_date?.invalid && emi_due_date?.touched">
+            EMI due date is required
+          </mat-error>
+        </mat-form-field>
+      </div>
 
-        <div class="form-row">
-          <mat-form-field appearance="outline">
-            <mat-label>EMI Amount</mat-label>
-            <input matInput type="number" formControlName="emi_amount" placeholder="EMI amount" readonly>
-          </mat-form-field>
+      <div *ngIf="showErrorMsg" class="error-message">
+        {{ errorMessage }}
+      </div>
+    </form>
+  </mat-dialog-content>
 
-          <mat-form-field appearance="outline">
-            <mat-label>EMI Due Date</mat-label>
-            <input matInput [matDatepicker]="emiDatePicker" formControlName="emi_due_date">
-            <mat-datepicker-toggle matSuffix [for]="emiDatePicker"></mat-datepicker-toggle>
-            <mat-datepicker #emiDatePicker></mat-datepicker>
-            <mat-error *ngIf="emi_due_date?.invalid && emi_due_date?.touched">
-              EMI due date is required
-            </mat-error>
-          </mat-form-field>
-        </div>
-
-        <div class="form-actions">
-          <button mat-button type="button" (click)="router.navigate(['/sales'])">Cancel</button>
-          <button mat-raised-button color="primary" type="submit" [disabled]="salesForm.invalid">
-            {{ isEditMode ? 'Update' : 'Create' }} Sales Record
-          </button>
-        </div>
-
-        <div *ngIf="showErrorMsg" class="error-message">
-          {{ errorMessage }}
-        </div>
-      </form>
-    </mat-card-content>
-  </mat-card>
+  <mat-dialog-actions align="end">
+    <button mat-button type="button" (click)="onCancel()">Cancel</button>
+    <button mat-raised-button color="primary" type="submit" [disabled]="salesForm.invalid" (click)="onSubmit()">
+      {{ isEditMode ? 'Update' : 'Create' }} Sales Record
+    </button>
+  </mat-dialog-actions>
 </div> 
