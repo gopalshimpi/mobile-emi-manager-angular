@@ -1,13 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { MatTableModule } from '@angular/material/table';
+import { MatTableModule, MatTableDataSource } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatPaginatorModule, MatPaginator } from '@angular/material/paginator';
 import { SalesService } from '../../shared/services/sales.service';
 import { SalesRecord } from '../../shared/models/sales-record.model';
 import { SalesDetailsComponent } from '../sales-details/sales-details.component';
@@ -25,7 +26,8 @@ import { SalesRecordComponent } from '../sales-record/sales-record.component';
     MatIconModule,
     MatDialogModule,
     MatSnackBarModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatPaginatorModule
   ],
   templateUrl: './sales-list.component.html',
   styleUrls: ['./sales-list.component.css']
@@ -42,7 +44,8 @@ export class SalesListComponent implements OnInit {
     'emi_due_date',
     'actions'
   ];
-  dataSource: SalesRecord[] = [];
+  dataSource = new MatTableDataSource<SalesRecord>([]);
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(
     private salesService: SalesService,
@@ -55,14 +58,19 @@ export class SalesListComponent implements OnInit {
     this.loadSalesRecords();
   }
 
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+  }
+
   loadSalesRecords() {
     this.salesService.getSalesRecords().subscribe({
       next: (records) => {
         // Calculate pending amount for each record
-        this.dataSource = records.map(record => ({
+        const recordsWithPendingAmount = records.map(record => ({
           ...record,
           pending_amount: record.price - record.down_payment_amount
         }));
+        this.dataSource.data = recordsWithPendingAmount;
       },
       error: (error) => {
         console.error('Error loading sales records:', error);
