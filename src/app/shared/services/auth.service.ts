@@ -22,8 +22,7 @@ export class AuthService {
   }
 
   register(user: User): Observable<any> {
-    const headers = this.getAuthHeader();
-    return this.requestService.post(`${ApiUrl.backendUri}/${ApiUrl.users}`, user, { headers });
+    return this.requestService.post(`${ApiUrl.backendUri}/${ApiUrl.users}`, user);
   }
 
   logout() {
