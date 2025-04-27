@@ -48,7 +48,7 @@ export class SalesRecordComponent implements OnInit {
     private snackBar: MatSnackBar,
     private router: Router,
     private route: ActivatedRoute,
-    @Optional() public dialogRef: MatDialogRef<SalesRecordComponent>,
+    @Optional() private dialogRef: MatDialogRef<SalesRecordComponent>,
     @Optional() @Inject(MAT_DIALOG_DATA) public data: { recordId?: string }
   ) {
     this.isDialog = !!dialogRef;

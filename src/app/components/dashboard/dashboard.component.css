@@ -1,0 +1,27 @@
+.dashboard-container {
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.actions-container {
+  margin: 20px 0;
+  display: flex;
+  gap: 10px;
+}
+
+.logout-container {
+  margin-top: 20px;
+}
+
+mat-card {
+  margin-bottom: 20px;
+}
+
+mat-card-header {
+  margin-bottom: 20px;
+}
+
+mat-card-content {
+  padding: 20px;
+} 
