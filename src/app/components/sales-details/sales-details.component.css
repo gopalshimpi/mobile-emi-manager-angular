@@ -1,59 +1,105 @@
 .sales-details-container {
   padding: 20px;
+  max-height: 80vh;
+  overflow-y: auto;
 }
 
 mat-card {
-  margin: 20px auto;
-  max-width: 800px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
 mat-card-header {
   display: flex;
   align-items: center;
-  margin-bottom: 20px;
+  padding: 16px 24px;
+  border-bottom: 1px solid #e0e0e0;
+  background-color: #f8f9fa;
+  border-radius: 12px 12px 0 0;
+}
+
+mat-card-title {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #2c3e50;
+  margin: 0;
 }
 
 .spacer {
-  flex: 1 1 auto;
+  flex: 1;
+}
+
+mat-card-content {
+  padding: 24px;
 }
 
 .details-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 20px;
-  padding: 20px;
 }
 
 .detail-item {
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  padding: 12px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  transition: transform 0.2s ease;
+}
+
+.detail-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .label {
+  font-size: 0.9rem;
+  color: #6c757d;
+  margin-bottom: 4px;
   font-weight: 500;
-  color: rgba(0, 0, 0, 0.6);
 }
 
 .value {
-  font-size: 1.1em;
+  font-size: 1.1rem;
+  color: #2c3e50;
+  font-weight: 500;
 }
 
-.loading-spinner {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 200px;
+/* Custom scrollbar styling */
+.sales-details-container::-webkit-scrollbar {
+  width: 8px;
 }
 
-@media (max-width: 768px) {
-  .sales-details-container {
-    padding: 10px;
-  }
-  
+.sales-details-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.sales-details-container::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+.sales-details-container::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
   .details-grid {
     grid-template-columns: 1fr;
-    gap: 15px;
-    padding: 15px;
+  }
+  
+  mat-card-header {
+    padding: 12px 16px;
+  }
+  
+  mat-card-content {
+    padding: 16px;
+  }
+  
+  .detail-item {
+    padding: 10px;
   }
 } 
