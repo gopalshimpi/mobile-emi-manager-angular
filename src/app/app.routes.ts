@@ -4,6 +4,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { RegisterComponent } from './components/register/register.component';
 import { SalesRecordComponent } from './components/sales-record/sales-record.component';
 import { SalesDetailsComponent } from './components/sales-details/sales-details.component';
+import { SalesListComponent } from './components/sales-list/sales-list.component';
 
 export const routes: Routes = [
   { 
@@ -17,6 +18,10 @@ export const routes: Routes = [
   { 
     path: 'dashboard', 
     component: DashboardComponent 
+  },
+  { 
+    path: 'sales', 
+    component: SalesListComponent 
   },
   { 
     path: 'sales/create', 

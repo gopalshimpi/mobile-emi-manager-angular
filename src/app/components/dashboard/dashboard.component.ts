@@ -5,12 +5,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
 import { AuthService } from '../../shared/services/auth.service';
 import { User, UserRole } from '../../shared/models/user.model';
-import { SalesListComponent } from '../sales-list/sales-list.component';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, MatCardModule, MatButtonModule, SalesListComponent],
+  imports: [CommonModule, MatCardModule, MatButtonModule],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
