@@ -1,15 +1,17 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { SalesService } from '../../shared/services/sales.service';
 import { SalesRecord } from '../../shared/models/sales-record.model';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-sales-record',
@@ -22,89 +24,127 @@ import { SalesRecord } from '../../shared/models/sales-record.model';
     MatButtonModule,
     MatCardModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatSnackBarModule,
+    MatProgressSpinnerModule
   ],
   templateUrl: './sales-record.component.html',
   styleUrls: ['./sales-record.component.scss']
 })
-export class SalesRecordComponent {
+export class SalesRecordComponent implements OnInit {
   salesForm: FormGroup;
   showErrorMsg = false;
   errorMessage = '';
+  isEditMode = false;
+  recordId: string | null = null;
+  isLoading = false;
 
   constructor(
     private fb: FormBuilder,
+    private salesService: SalesService,
     public router: Router,
-    private salesService: SalesService
+    private route: ActivatedRoute,
+    private snackBar: MatSnackBar
   ) {
     this.salesForm = this.fb.group({
-      customer_name: ['', [Validators.required]],
-      mobile_imei_number: ['', [Validators.required, Validators.pattern('^[0-9]{15}$')]],
-      customer_mobile_number: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
-      mobile_model: ['', [Validators.required]],
-      date_of_purchase: ['', [Validators.required]],
-      pan_number: ['', [Validators.required, Validators.pattern('^[A-Z]{5}[0-9]{4}[A-Z]{1}$')]],
-      aadhar_number: ['', [Validators.required, Validators.pattern('^[0-9]{12}$')]],
+      customer_name: ['', Validators.required],
+      mobile_imei_number: ['', [Validators.required, Validators.pattern(/^\d{15}$/)]],
+      customer_mobile_number: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
+      mobile_model: ['', Validators.required],
+      date_of_purchase: ['', Validators.required],
+      pan_number: ['', [Validators.required, Validators.pattern(/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/)]],
+      aadhar_number: ['', [Validators.required, Validators.pattern(/^\d{12}$/)]],
       price: ['', [Validators.required, Validators.min(0)]],
       down_payment_amount: ['', [Validators.required, Validators.min(0)]],
-      pending_amount: ['', [Validators.required, Validators.min(0)]],
+      pending_amount: [{ value: '', disabled: true }],
       number_of_emis: ['', [Validators.required, Validators.min(1)]],
       processing_fees: ['', [Validators.required, Validators.min(0)]],
-      emi_amount: ['', [Validators.required, Validators.min(0)]],
-      emi_due_date: ['', [Validators.required]]
+      emi_amount: [{ value: '', disabled: true }],
+      emi_due_date: ['', Validators.required]
     });
 
-    // Subscribe to price and down payment changes for pending amount calculation
-    this.salesForm.get('price')?.valueChanges.subscribe(() => this.calculatePendingAmount());
-    this.salesForm.get('down_payment_amount')?.valueChanges.subscribe(() => this.calculatePendingAmount());
-
-    // Subscribe to pending amount and number of EMIs changes for EMI amount calculation
-    this.salesForm.get('pending_amount')?.valueChanges.subscribe(() => this.calculateEMIAmount());
-    this.salesForm.get('number_of_emis')?.valueChanges.subscribe(() => this.calculateEMIAmount());
+    // Subscribe to form value changes to calculate pending and EMI amounts
+    this.salesForm.valueChanges.subscribe(() => {
+      this.calculateAmounts();
+    });
   }
 
-  calculatePendingAmount() {
-    const price = parseFloat(this.salesForm.get('price')?.value || '0');
-    const downPayment = parseFloat(this.salesForm.get('down_payment_amount')?.value || '0');
-    
-    if (price >= 0 && downPayment >= 0) {
-      const pendingAmount = price - downPayment;
-      this.salesForm.get('pending_amount')?.setValue(pendingAmount.toFixed(2), { emitEvent: false });
-      this.calculateEMIAmount(); // Recalculate EMI amount when pending amount changes
+  ngOnInit() {
+    this.recordId = this.route.snapshot.queryParamMap.get('id');
+    if (this.recordId) {
+      this.isEditMode = true;
+      this.loadSalesRecord(this.recordId);
     }
   }
 
-  calculateEMIAmount() {
-    const pendingAmount = parseFloat(this.salesForm.get('pending_amount')?.value || '0');
-    const numberOfEMIs = parseInt(this.salesForm.get('number_of_emis')?.value || '0');
-    
-    if (pendingAmount > 0 && numberOfEMIs > 0) {
-      const emiAmount = pendingAmount / numberOfEMIs;
-      this.salesForm.get('emi_amount')?.setValue(emiAmount.toFixed(2), { emitEvent: false });
-    }
+  private calculateAmounts() {
+    const price = this.salesForm.get('price')?.value || 0;
+    const downPayment = this.salesForm.get('down_payment_amount')?.value || 0;
+    const processingFees = this.salesForm.get('processing_fees')?.value || 0;
+    const numberOfEmis = this.salesForm.get('number_of_emis')?.value || 0;
+
+    const pendingAmount = price - downPayment;
+    const emiAmount = numberOfEmis > 0 ? (pendingAmount + processingFees) / numberOfEmis : 0;
+
+    this.salesForm.patchValue({
+      pending_amount: pendingAmount,
+      emi_amount: emiAmount
+    }, { emitEvent: false });
+  }
+
+  private loadSalesRecord(id: string) {
+    this.isLoading = true;
+    this.salesService.getSalesRecord(parseInt(id)).subscribe({
+      next: (record) => {
+        this.salesForm.patchValue(record);
+        this.isLoading = false;
+      },
+      error: (error) => {
+        this.showErrorMsg = true;
+        this.errorMessage = 'Failed to load sales record. Please try again.';
+        this.isLoading = false;
+        this.showSnackBar('Error loading sales record', 'error');
+      }
+    });
   }
 
   onSubmit() {
-    this.showErrorMsg = false;
     if (this.salesForm.valid) {
-      const record: SalesRecord = {
-        ...this.salesForm.value,
-        date_of_purchase: new Date(this.salesForm.value.date_of_purchase),
-        emi_due_date: new Date(this.salesForm.value.emi_due_date)
-      };
+      const formData = this.salesForm.getRawValue();
       
-      this.salesService.createSalesRecord(record).subscribe({
-        next: (resp) => {
-          if (resp) {
-            this.router.navigate(['/dashboard']);
+      if (this.isEditMode && this.recordId) {
+        this.salesService.updateSalesRecord(parseInt(this.recordId), formData).subscribe({
+          next: () => {
+            this.showSnackBar('Sales record updated successfully', 'success');
+            this.router.navigate(['/sales']);
+          },
+          error: (error) => {
+            this.showErrorMsg = true;
+            this.errorMessage = 'Failed to update sales record. Please try again.';
+            this.showSnackBar('Error updating sales record', 'error');
           }
-        },
-        error: (error) => {
-          this.showErrorMsg = true;
-          this.errorMessage = error.error?.message || 'Failed to create sales record. Please try again.';
-        }
-      });
+        });
+      } else {
+        this.salesService.createSalesRecord(formData).subscribe({
+          next: () => {
+            this.showSnackBar('Sales record created successfully', 'success');
+            this.router.navigate(['/sales']);
+          },
+          error: (error) => {
+            this.showErrorMsg = true;
+            this.errorMessage = 'Failed to create sales record. Please try again.';
+            this.showSnackBar('Error creating sales record', 'error');
+          }
+        });
+      }
     }
+  }
+
+  private showSnackBar(message: string, type: 'success' | 'error') {
+    this.snackBar.open(message, 'Close', {
+      duration: 3000,
+      panelClass: type === 'success' ? ['success-snackbar'] : ['error-snackbar']
+    });
   }
 
   get customer_name() {
