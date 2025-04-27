@@ -67,6 +67,17 @@
           <span class="value">{{salesRecord.emi_due_date | date:'mediumDate'}}</span>
         </div>
       </div>
+
+      <div class="actions-container">
+        <button mat-raised-button color="accent" (click)="editRecord()">
+          <mat-icon>edit</mat-icon>
+          Edit Record
+        </button>
+        <button mat-raised-button color="warn" (click)="deleteRecord()" [disabled]="loading">
+          <mat-icon>delete</mat-icon>
+          Delete Record
+        </button>
+      </div>
     </mat-card-content>
   </mat-card>
 </div> 

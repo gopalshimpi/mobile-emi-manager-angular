@@ -7,3 +7,41 @@ html, body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+
+/* Snackbar styles */
+.success-snackbar {
+  background: #4caf50;
+  color: white;
+}
+
+.error-snackbar {
+  background: #f44336;
+  color: white;
+}
+
+/* Table styles */
+.mat-mdc-table {
+  width: 100%;
+}
+
+.mat-mdc-row:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+/* Card styles */
+.mat-mdc-card {
+  margin-bottom: 20px;
+}
+
+/* Button styles */
+.mat-mdc-raised-button {
+  min-width: 120px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .mat-mdc-table {
+    display: block;
+    overflow-x: auto;
+  }
+}

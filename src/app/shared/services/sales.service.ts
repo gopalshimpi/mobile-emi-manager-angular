@@ -22,4 +22,12 @@ export class SalesService {
   getSalesRecord(id: number): Observable<SalesRecord> {
     return this.requestService.get(`${ApiUrl.backendUri}/sales/${id}`);
   }
+
+  updateSalesRecord(id: number, record: SalesRecord): Observable<SalesRecord> {
+    return this.requestService.put(`${ApiUrl.backendUri}/sales/${id}`, record);
+  }
+
+  deleteSalesRecord(id: number): Observable<any> {
+    return this.requestService.delete(`${ApiUrl.backendUri}/sales/${id}`);
+  }
 } 

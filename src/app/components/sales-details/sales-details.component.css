@@ -66,6 +66,17 @@ mat-card-content {
   font-weight: 500;
 }
 
+.actions-container {
+  display: flex;
+  gap: 16px;
+  margin-top: 30px;
+  justify-content: flex-end;
+}
+
+.actions-container button {
+  min-width: 150px;
+}
+
 /* Custom scrollbar styling */
 .sales-details-container::-webkit-scrollbar {
   width: 8px;
@@ -101,5 +112,13 @@ mat-card-content {
   
   .detail-item {
     padding: 10px;
+  }
+  
+  .actions-container {
+    flex-direction: column;
+  }
+  
+  .actions-container button {
+    width: 100%;
   }
 } 
