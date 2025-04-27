@@ -57,7 +57,7 @@ export class LoginComponent {
         "password": this.loginForm.value.password
       }
 
-      this.authService.login({email: 'gopalshimpi@gmail.com', password: 'SuperSecure123'}).subscribe({
+      this.authService.login(payload).subscribe({
         next: (resp) => {
           if (resp && resp.user && resp.token) {
             this.storageService.set(AppConst.currentUserKey, resp.user);

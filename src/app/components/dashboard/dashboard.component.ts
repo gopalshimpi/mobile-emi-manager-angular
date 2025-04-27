@@ -4,7 +4,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
 import { AuthService } from '../../shared/services/auth.service';
-import { User } from '../../shared/models/user.model';
+import { User, UserRole } from '../../shared/models/user.model';
 
 @Component({
   selector: 'app-dashboard',
@@ -17,12 +17,20 @@ import { User } from '../../shared/models/user.model';
 export class DashboardComponent {
 
   user!: User;
+  isSuperAdmin = false;
 
   constructor(
     private router: Router,
     private authService: AuthService,
-  ) {
+  ) {}
+
+  ngOnInit() {
     this.user = this.authService.currentUser;
+    this.isSuperAdmin = this.user?.role === UserRole.ADMIN;
+  }
+
+  createAdmin() {
+    this.router.navigate(['/register']);
   }
 
   logout() {

@@ -3,6 +3,9 @@ import { RequestService } from '../requests/request.service';
 import { ApiUrl } from '../app-data.constant';
 import { StorageService } from './storage.service';
 import { AppConst } from '../app-data.constant';
+import { User } from '../models/user.model';
+import { Observable } from 'rxjs';
+import { HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +21,11 @@ export class AuthService {
     return this.requestService.post(`${ApiUrl.backendUri}/${ApiUrl.login}`, user);
   }
 
+  register(user: User): Observable<any> {
+    const headers = this.getAuthHeader();
+    return this.requestService.post(`${ApiUrl.backendUri}/${ApiUrl.users}`, user, { headers });
+  }
+
   logout() {
     this.storageService.remove(AppConst.currentUserKey);
     this.storageService.remove(AppConst.token);
@@ -27,7 +35,15 @@ export class AuthService {
     return !!this.storageService.get(AppConst.token);
   }
 
-  get currentUser() {
+  get currentUser(): User {
     return this.storageService.get(AppConst.currentUserKey);
+  }
+
+  getToken() {
+    return this.storageService.get(AppConst.token);
+  }
+
+  getAuthHeader() {
+    return new HttpHeaders({ 'Authorization': `Bearer ${this.getToken()}` });
   }
 }

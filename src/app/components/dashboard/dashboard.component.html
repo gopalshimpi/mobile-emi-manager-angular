@@ -5,6 +5,13 @@
     </mat-card-header>
     <mat-card-content>
       <p>Welcome <b> {{user.name}} </b> to your dashboard!</p>
+      
+      <div class="actions-container" *ngIf="isSuperAdmin">
+        <button mat-raised-button color="primary" (click)="createAdmin()">
+          Create Admin
+        </button>
+      </div>
+
       <div class="logout-container">
         <button mat-raised-button color="warn" (click)="logout()">Logout</button>
       </div>

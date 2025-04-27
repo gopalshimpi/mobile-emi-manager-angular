@@ -8,8 +8,18 @@ mat-card {
   margin-bottom: 20px;
 }
 
+.actions-container {
+  margin: 20px 0;
+  display: flex;
+  gap: 16px;
+}
+
 .logout-container {
   margin-top: 20px;
   display: flex;
   justify-content: flex-end;
+}
+
+button[mat-raised-button] {
+  min-width: 120px;
 } 

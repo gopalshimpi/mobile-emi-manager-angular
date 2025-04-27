@@ -1,6 +1,13 @@
+export interface User {
+  id?: number;
+  name: string;
+  email: string;
+  password: string;
+  contact_number?: string;
+  role: UserRole;
+}
 
-export class User {
-  name!: string;
-  email!: string;
-  role!: string;
+export enum UserRole {
+  ADMIN = 'admin',
+  USER = 'user'
 }
