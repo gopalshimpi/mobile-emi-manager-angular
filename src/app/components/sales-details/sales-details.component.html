@@ -8,76 +8,78 @@
       </button>
     </mat-card-header>
 
-    <mat-card-content>
-      <div class="details-grid">
-        <div class="detail-item">
-          <span class="label">Customer Name:</span>
-          <span class="value">{{salesRecord.customer_name}}</span>
+    <div class="scrollable-content">
+      <mat-card-content>
+        <div class="details-grid">
+          <div class="detail-item">
+            <span class="label">Customer Name:</span>
+            <span class="value">{{salesRecord.customer_name}}</span>
+          </div>
+          <div class="detail-item">
+            <span class="label">Mobile Model:</span>
+            <span class="value">{{salesRecord.mobile_model}}</span>
+          </div>
+          <div class="detail-item">
+            <span class="label">IMEI Number:</span>
+            <span class="value">{{salesRecord.mobile_imei_number}}</span>
+          </div>
+          <div class="detail-item">
+            <span class="label">Customer Mobile:</span>
+            <span class="value">{{salesRecord.customer_mobile_number}}</span>
+          </div>
+          <div class="detail-item">
+            <span class="label">Date of Purchase:</span>
+            <span class="value">{{salesRecord.date_of_purchase | date:'mediumDate'}}</span>
+          </div>
+          <div class="detail-item">
+            <span class="label">PAN Number:</span>
+            <span class="value">{{salesRecord.pan_number}}</span>
+          </div>
+          <div class="detail-item">
+            <span class="label">Aadhar Number:</span>
+            <span class="value">{{salesRecord.aadhar_number}}</span>
+          </div>
+          <div class="detail-item">
+            <span class="label">Price:</span>
+            <span class="value">{{salesRecord.price | currency:'INR'}}</span>
+          </div>
+          <div class="detail-item">
+            <span class="label">Down Payment:</span>
+            <span class="value">{{salesRecord.down_payment_amount | currency:'INR'}}</span>
+          </div>
+          <div class="detail-item">
+            <span class="label">Pending Amount:</span>
+            <span class="value">{{salesRecord.pending_amount | currency:'INR'}}</span>
+          </div>
+          <div class="detail-item">
+            <span class="label">Number of EMIs:</span>
+            <span class="value">{{salesRecord.number_of_emis}}</span>
+          </div>
+          <div class="detail-item">
+            <span class="label">Processing Fees:</span>
+            <span class="value">{{salesRecord.processing_fees | currency:'INR'}}</span>
+          </div>
+          <div class="detail-item">
+            <span class="label">EMI Amount:</span>
+            <span class="value">{{salesRecord.emi_amount | currency:'INR'}}</span>
+          </div>
+          <div class="detail-item">
+            <span class="label">EMI Due Date:</span>
+            <span class="value">{{salesRecord.emi_due_date | date:'mediumDate'}}</span>
+          </div>
         </div>
-        <div class="detail-item">
-          <span class="label">Mobile Model:</span>
-          <span class="value">{{salesRecord.mobile_model}}</span>
-        </div>
-        <div class="detail-item">
-          <span class="label">IMEI Number:</span>
-          <span class="value">{{salesRecord.mobile_imei_number}}</span>
-        </div>
-        <div class="detail-item">
-          <span class="label">Customer Mobile:</span>
-          <span class="value">{{salesRecord.customer_mobile_number}}</span>
-        </div>
-        <div class="detail-item">
-          <span class="label">Date of Purchase:</span>
-          <span class="value">{{salesRecord.date_of_purchase | date:'mediumDate'}}</span>
-        </div>
-        <div class="detail-item">
-          <span class="label">PAN Number:</span>
-          <span class="value">{{salesRecord.pan_number}}</span>
-        </div>
-        <div class="detail-item">
-          <span class="label">Aadhar Number:</span>
-          <span class="value">{{salesRecord.aadhar_number}}</span>
-        </div>
-        <div class="detail-item">
-          <span class="label">Price:</span>
-          <span class="value">{{salesRecord.price | currency:'INR'}}</span>
-        </div>
-        <div class="detail-item">
-          <span class="label">Down Payment:</span>
-          <span class="value">{{salesRecord.down_payment_amount | currency:'INR'}}</span>
-        </div>
-        <div class="detail-item">
-          <span class="label">Pending Amount:</span>
-          <span class="value">{{salesRecord.pending_amount | currency:'INR'}}</span>
-        </div>
-        <div class="detail-item">
-          <span class="label">Number of EMIs:</span>
-          <span class="value">{{salesRecord.number_of_emis}}</span>
-        </div>
-        <div class="detail-item">
-          <span class="label">Processing Fees:</span>
-          <span class="value">{{salesRecord.processing_fees | currency:'INR'}}</span>
-        </div>
-        <div class="detail-item">
-          <span class="label">EMI Amount:</span>
-          <span class="value">{{salesRecord.emi_amount | currency:'INR'}}</span>
-        </div>
-        <div class="detail-item">
-          <span class="label">EMI Due Date:</span>
-          <span class="value">{{salesRecord.emi_due_date | date:'mediumDate'}}</span>
-        </div>
-      </div>
+      </mat-card-content>
+    </div>
 
-      <div class="actions-container">
-        <button mat-raised-button color="accent" (click)="editRecord()">
-          <mat-icon>edit</mat-icon>
-          Edit Record
-        </button>
-        <button mat-raised-button color="warn" (click)="deleteRecord()" [disabled]="loading">
-          <mat-icon>delete</mat-icon>
-          Delete Record
-        </button>
-      </div>
-    </mat-card-content>
+    <div class="actions-container">
+      <button mat-raised-button color="accent" (click)="editRecord()">
+        <mat-icon>edit</mat-icon>
+        Edit Record
+      </button>
+      <button mat-raised-button color="warn" (click)="deleteRecord()" [disabled]="loading">
+        <mat-icon>delete</mat-icon>
+        Delete Record
+      </button>
+    </div>
   </mat-card>
 </div> 
