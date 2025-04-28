@@ -20,16 +20,33 @@
         <mat-icon>person_add</mat-icon>
         Create Admin
       </button>
-      <button mat-raised-button color="warn" (click)="logout()">
+      <!-- <button mat-raised-button color="warn" (click)="logout()">
         <mat-icon>exit_to_app</mat-icon>
         Logout
-      </button>
+      </button> -->
     </div>
   </div>
 
   <!-- Stats Grid -->
-  <div class="stats-grid">
+  <div>
+    <mat-form-field appearance="outline" style="min-width: 140px; margin-right: 12px;">
+      <mat-label>Filter</mat-label>
+      <mat-select [(value)]="selectedFilter" (selectionChange)="onFilterChange($event.value)">
+        <mat-option *ngFor="let option of filterOptions" [value]="option.value">{{option.label}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline" style="min-width: 220px; margin-right: 12px;">
+      <mat-label>Date Range</mat-label>
+      <mat-date-range-input [rangePicker]="picker">
+        <input matStartDate placeholder="Start date" [(ngModel)]="dateRange.start">
+        <input matEndDate placeholder="End date" [(ngModel)]="dateRange.end">
+      </mat-date-range-input>
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-date-range-picker #picker (dateChange)="onDateRangeChange($event)"></mat-date-range-picker>
+    </mat-form-field>
+  </div>
 
+  <div class="stats-grid">
      <!-- Total Sale Amount Card -->
      <mat-card class="stat-card total-amount">
       <mat-card-header>

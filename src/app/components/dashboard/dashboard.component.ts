@@ -10,6 +10,9 @@ import { DataSharingService } from '../../shared/services/data-sharing.service';
 import { MatIconModule } from '@angular/material/icon';
 import { MatNativeDateModule } from '@angular/material/core';
 import { SalesService } from '../../shared/services/sales.service';
+import { MatSelectModule } from '@angular/material/select';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { FormsModule } from '@angular/forms';
 
 interface DashboardStats {
   total_sales: number;
@@ -31,7 +34,10 @@ interface DashboardStats {
     MatButtonModule,
     MatDialogModule,
     MatIconModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatSelectModule,
+    MatDatepickerModule,
+    FormsModule
   ],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
@@ -49,6 +55,15 @@ export class DashboardComponent implements OnInit {
     total_processing_fees: 0,
     total_down_payment_received: 0
   };
+  filterOptions = [
+    { value: 'all', label: 'All Time' },
+    { value: 'today', label: 'Today' },
+    { value: 'yesterday', label: 'Yesterday' },
+    { value: 'this_week', label: 'This Week' },
+    { value: 'this_month', label: 'This Month' }
+  ];
+  selectedFilter = 'all';
+  dateRange: { start: Date | null, end: Date | null } = { start: null, end: null };
 
   constructor(
     private authService: AuthService,
@@ -110,5 +125,15 @@ export class DashboardComponent implements OnInit {
     this.authService.logout();
     this.router.navigate(['/login']);
     this.dataSharingService.setAppHeader(false);
+  }
+
+  onFilterChange(value: string) {
+    this.selectedFilter = value;
+    // Add logic to filter dashboard data
+  }
+
+  onDateRangeChange(event: any) {
+    this.dateRange = event.value;
+    // Add logic to filter dashboard data by date range
   }
 } 
