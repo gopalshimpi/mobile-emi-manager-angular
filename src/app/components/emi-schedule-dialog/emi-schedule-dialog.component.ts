@@ -39,7 +39,6 @@ export class EmiScheduleDialogComponent {
   ) {}
 
   ngOnInit() {
-    debugger
     this.saleData = this.data;
     this.generateSchedule();
   }
