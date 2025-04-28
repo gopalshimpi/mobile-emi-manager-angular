@@ -15,6 +15,7 @@ import { SalesDetailsComponent } from '../sales-details/sales-details.component'
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { SalesRecordComponent } from '../sales-record/sales-record.component';
 import { MatNativeDateModule } from '@angular/material/core';
+import { EmiScheduleDialogComponent } from '../emi-schedule-dialog/emi-schedule-dialog.component';
 
 @Component({
   selector: 'app-sales-list',
@@ -29,7 +30,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatSnackBarModule,
     MatTooltipModule,
     MatPaginatorModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    EmiScheduleDialogComponent
   ],
   templateUrl: './sales-list.component.html',
   styleUrls: ['./sales-list.component.css']
@@ -147,6 +149,17 @@ export class SalesListComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.loadSalesRecords();
+      }
+    });
+  }
+
+  viewEmiSchedule(record: SalesRecord) {
+    this.dialog.open(EmiScheduleDialogComponent, {
+      width: '500px',
+      data: {
+        number_of_emis: record.number_of_emis,
+        emi_due_date: record.emi_due_date,
+        emi_amount: record.emi_amount
       }
     });
   }

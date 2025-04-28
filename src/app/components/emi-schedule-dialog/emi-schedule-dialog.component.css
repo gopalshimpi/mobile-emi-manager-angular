@@ -1,0 +1,13 @@
+.emi-schedule-table {
+  width: 100%;
+  margin-top: 16px;
+}
+
+th, td {
+  text-align: center;
+  padding: 8px;
+}
+
+mat-dialog-content {
+  min-width: 350px;
+} 
