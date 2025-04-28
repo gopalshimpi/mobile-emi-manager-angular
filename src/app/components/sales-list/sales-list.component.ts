@@ -153,13 +153,10 @@ export class SalesListComponent implements OnInit {
   }
 
   viewEmiSchedule(record: SalesRecord) {
+    debugger
     this.dialog.open(EmiScheduleDialogComponent, {
       width: '500px',
-      data: {
-        number_of_emis: record.number_of_emis,
-        emi_due_date: record.emi_due_date,
-        emi_amount: record.emi_amount
-      }
+      data: record
     });
   }
 

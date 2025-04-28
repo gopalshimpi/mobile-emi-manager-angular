@@ -34,4 +34,8 @@ export class SalesService {
   getDashboardSummery() {
     return this.requestService.get(`${ApiUrl.backendUri}/dashboard/summary`);
   }
+
+  getEmiSchedule(saleId: number) {
+    return this.requestService.get(`${ApiUrl.backendUri}/sales/${saleId}/emi_schedule`);
+  }
 } 
