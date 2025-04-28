@@ -10,6 +10,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { AuthService } from '../../shared/services/auth.service';
 import { AppConst } from '../../shared/app-data.constant';
 import { StorageService } from '../../shared/services/storage.service';
+import { DataSharingService } from '../../shared/services/data-sharing.service';
 
 @Component({
   selector: 'app-login',
@@ -35,7 +36,8 @@ export class LoginComponent {
     private fb: FormBuilder,
     private router: Router,
     private authService: AuthService,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private dataSharingService: DataSharingService
   ) {
     this.loginForm = this.fb.group({
       username: ['', [Validators.required]],
@@ -63,6 +65,7 @@ export class LoginComponent {
             this.storageService.set(AppConst.currentUserKey, resp.user);
             this.storageService.set(AppConst.token, resp.token);
             this.router.navigate(['/dashboard']);
+            this.dataSharingService.setAppHeader(true);
           }
         }, error: error => {
           this.showErrorMsg = true;

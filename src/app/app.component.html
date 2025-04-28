@@ -1,4 +1,5 @@
-<app-header></app-header>
-<div class="content">
+<app-header *ngIf="userLoggedIn"></app-header>
+<!-- {{userLoggedIn}} -->
+<div class="{{userLoggedIn ? 'content': ''}}">
   <router-outlet></router-outlet>
 </div>

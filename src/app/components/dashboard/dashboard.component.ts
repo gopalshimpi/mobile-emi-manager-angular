@@ -6,6 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { AuthService } from '../../shared/services/auth.service';
 import { SalesRecordComponent } from '../sales-record/sales-record.component';
+import { DataSharingService } from '../../shared/services/data-sharing.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -26,8 +27,8 @@ export class DashboardComponent implements OnInit {
   constructor(
     private authService: AuthService,
     public router: Router,
-    private dialog: MatDialog
-  ) {
+    private dialog: MatDialog,
+    private dataSharingService: DataSharingService) {
     this.user = this.authService.currentUser;
     this.isSuperAdmin = this.user?.role === 'super_admin';
   }
@@ -58,5 +59,6 @@ export class DashboardComponent implements OnInit {
   logout() {
     this.authService.logout();
     this.router.navigate(['/login']);
+    this.dataSharingService.setAppHeader(false);
   }
 } 
