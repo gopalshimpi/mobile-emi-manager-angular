@@ -33,7 +33,7 @@ import { EmiScheduleDialogComponent } from '../emi-schedule-dialog/emi-schedule-
     MatNativeDateModule
 ],
   templateUrl: './sales-list.component.html',
-  styleUrls: ['./sales-list.component.css']
+  styleUrls: ['./sales-list.component.scss']
 })
 export class SalesListComponent implements OnInit {
   displayedColumns: string[] = [
