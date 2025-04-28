@@ -55,4 +55,8 @@ export class HeaderComponent implements OnInit {
   navigateToCreateAdmin() {
     this.router.navigate(['/register']);
   }
+
+  navigateToEmiPage() {
+    this.router.navigate(['/emi']);
+  }
 } 

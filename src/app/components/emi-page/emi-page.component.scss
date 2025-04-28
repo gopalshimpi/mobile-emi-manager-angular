@@ -1,0 +1,28 @@
+.paid-status {
+  color: #388e3c;
+  font-weight: bold;
+}
+
+.unpaid-status {
+  color: #d32f2f;
+  font-weight: bold;
+}
+
+.mat-elevation-z8 {
+  margin-bottom: 32px;
+}
+
+mat-paginator {
+  margin-top: 0;
+  margin-bottom: 16px;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  border-radius: 0 0 8px 8px;
+  display: block;
+}
+
+.mat-column-actions {
+  width: 250px;
+  text-align: center;
+  vertical-align: middle;
+}
