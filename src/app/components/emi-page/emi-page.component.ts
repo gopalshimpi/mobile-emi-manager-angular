@@ -9,10 +9,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { SalesService } from '../../shared/services/sales.service';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-emi-page',
-  imports: [CommonModule, MatTableModule, MatPaginatorModule, MatDialogModule, MatIconModule, MatButtonModule, MatCardModule],
+  imports: [CommonModule, MatTableModule, MatPaginatorModule, MatDialogModule, MatIconModule, MatButtonModule, MatCardModule, 
+    MatSnackBarModule],
   templateUrl: './emi-page.component.html',
   styleUrl: './emi-page.component.scss'
 })
@@ -25,7 +27,9 @@ export class EmiPageComponent implements AfterViewInit {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private dialog: MatDialog, private salesService: SalesService) {}
+  constructor(private dialog: MatDialog,
+     private salesService: SalesService,
+     private snackBar: MatSnackBar) {}
 
   ngOnInit() {
     this.fetchUpcommingEmis();
@@ -70,7 +74,8 @@ export class EmiPageComponent implements AfterViewInit {
   handleMarkAsPaid(emiId: number) {
     this.salesService.markEmiAsPaid(emiId).subscribe({
       next: resp => {
-        debugger
+        this.showSnackBar(`${resp.message}`, 'success');
+        this.fetchUpcommingEmis();
       }, error: error => {
 
       }
@@ -79,5 +84,12 @@ export class EmiPageComponent implements AfterViewInit {
 
   isUnpaid(emi: any): boolean {
     return emi.status === 'unpaid';
+  }
+
+  private showSnackBar(message: string, type: 'success' | 'error') {
+    this.snackBar.open(message, 'Close', {
+      duration: 3000,
+      panelClass: type === 'success' ? ['success-snackbar'] : ['error-snackbar']
+    });
   }
 }
