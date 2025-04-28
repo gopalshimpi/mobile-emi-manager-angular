@@ -14,6 +14,7 @@ import { SalesRecord } from '../../shared/models/sales-record.model';
 import { SalesDetailsComponent } from '../sales-details/sales-details.component';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { SalesRecordComponent } from '../sales-record/sales-record.component';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @Component({
   selector: 'app-sales-list',
@@ -27,7 +28,8 @@ import { SalesRecordComponent } from '../sales-record/sales-record.component';
     MatDialogModule,
     MatSnackBarModule,
     MatTooltipModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatNativeDateModule
   ],
   templateUrl: './sales-list.component.html',
   styleUrls: ['./sales-list.component.css']
