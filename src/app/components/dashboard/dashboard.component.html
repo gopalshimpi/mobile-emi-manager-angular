@@ -29,44 +29,45 @@
 
   <!-- Stats Grid -->
   <div class="stats-grid">
-    <!-- Total Sales Card -->
-    <mat-card class="stat-card total-sales">
-      <mat-card-header>
-        <mat-icon class="stat-icon">shopping_cart</mat-icon>
-        <mat-card-title class="stat-title">Total Sales</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <div class="stat-value">{{stats.total_sales}}</div>
-        <div class="stat-detail">Total number of sales</div>
-      </mat-card-content>
-    </mat-card>
 
-    <!-- Total Sale Amount Card -->
-    <mat-card class="stat-card total-amount">
+     <!-- Total Sale Amount Card -->
+     <mat-card class="stat-card total-amount">
       <mat-card-header>
         <mat-icon class="stat-icon">payments</mat-icon>
         <mat-card-title class="stat-title">Total Sale Amount</mat-card-title>
       </mat-card-header>
       <mat-card-content>
-        <div class="stat-value">₹{{stats.total_sale_amount | number:'1.0-0'}}</div>
+        <div class="stat-value">₹ {{stats.total_sale_amount | number:'1.0-0'}}</div>
         <div class="stat-detail">Total value of all sales</div>
       </mat-card-content>
     </mat-card>
 
-    <!-- Pending Amount Card -->
-    <mat-card class="stat-card pending-amount">
+    <!-- Processing Fees -->
+    <mat-card class="stat-card analytics-card">
       <mat-card-header>
-        <mat-icon class="stat-icon">pending</mat-icon>
-        <mat-card-title class="stat-title">Pending Amount</mat-card-title>
+        <mat-icon class="stat-icon">payments</mat-icon>
+        <mat-card-title class="stat-title">Processing Fees</mat-card-title>
       </mat-card-header>
       <mat-card-content>
-        <div class="stat-value">₹{{stats.total_pending_amount | number:'1.0-0'}}</div>
-        <div class="stat-detail">Total amount pending</div>
+        <div class="stat-value">₹  {{stats.total_processing_fees | number:'1.0-0'}}</div>
+        <div class="stat-detail">Total processing fees</div>
       </mat-card-content>
     </mat-card>
 
-    <!-- Paid EMIs Card -->
-    <mat-card class="stat-card paid-emis">
+    <!-- Down Payments -->
+    <mat-card class="stat-card trends-card">
+      <mat-card-header>
+        <mat-icon class="stat-icon">payments</mat-icon>
+        <mat-card-title class="stat-title">Down Payments </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="stat-value">₹ {{stats.total_down_payment_received | number:'1.0-0'}}</div>
+        <div class="stat-detail">Total down paymant received</div>
+      </mat-card-content>
+    </mat-card>
+
+     <!-- Paid EMIs Card -->
+     <mat-card class="stat-card paid-emis">
       <mat-card-header>
         <mat-icon class="stat-icon">check_circle</mat-icon>
         <mat-card-title class="stat-title">Paid EMIs</mat-card-title>
@@ -101,32 +102,32 @@
       </mat-card-content>
     </mat-card>
 
-    <!-- Analytics Card -->
-    <mat-card class="stat-card analytics-card">
+    <!-- Total Sales Card -->
+    <mat-card class="stat-card total-sales">
       <mat-card-header>
-        <mat-icon class="stat-icon">analytics</mat-icon>
-        <mat-card-title class="stat-title">Analytics</mat-card-title>
+        <mat-icon class="stat-icon">shopping_cart</mat-icon>
+        <mat-card-title class="stat-title">Total Sales</mat-card-title>
       </mat-card-header>
       <mat-card-content>
-        <div class="stat-value">Coming Soon</div>
-        <div class="stat-detail">Detailed analytics will be available here</div>
+        <div class="stat-value">{{stats.total_sales}}</div>
+        <div class="stat-detail">Total number of sales</div>
       </mat-card-content>
     </mat-card>
 
-    <!-- Trends Card -->
-    <mat-card class="stat-card trends-card">
+    <!-- Pending Amount Card -->
+    <mat-card class="stat-card pending-amount">
       <mat-card-header>
-        <mat-icon class="stat-icon">trending_up</mat-icon>
-        <mat-card-title class="stat-title">Trends</mat-card-title>
+        <mat-icon class="stat-icon">pending</mat-icon>
+        <mat-card-title class="stat-title">Pending Amount</mat-card-title>
       </mat-card-header>
       <mat-card-content>
-        <div class="stat-value">Coming Soon</div>
-        <div class="stat-detail">Sales trends will be available here</div>
+        <div class="stat-value">₹ {{stats.total_pending_amount | number:'1.0-0'}}</div>
+        <div class="stat-detail">Total amount pending</div>
       </mat-card-content>
     </mat-card>
 
     <!-- Alerts Card -->
-    <mat-card class="stat-card alerts-card">
+    <!-- <mat-card class="stat-card alerts-card">
       <mat-card-header>
         <mat-icon class="stat-icon">notifications</mat-icon>
         <mat-card-title class="stat-title">Alerts</mat-card-title>
@@ -135,6 +136,6 @@
         <div class="stat-value">Coming Soon</div>
         <div class="stat-detail">Important alerts will appear here</div>
       </mat-card-content>
-    </mat-card>
+    </mat-card> -->
   </div>
 </div> 

@@ -18,6 +18,8 @@ interface DashboardStats {
   total_paid_emis: number;
   total_unpaid_emis: number;
   upcoming_emis_in_next_7_days: number;
+  total_processing_fees: number;
+  total_down_payment_received: number;
 }
 
 @Component({
@@ -43,7 +45,9 @@ export class DashboardComponent implements OnInit {
     total_pending_amount: 0,
     total_paid_emis: 0,
     total_unpaid_emis: 0,
-    upcoming_emis_in_next_7_days: 0
+    upcoming_emis_in_next_7_days: 0,
+    total_processing_fees: 0,
+    total_down_payment_received: 0
   };
 
   constructor(
@@ -94,7 +98,9 @@ export class DashboardComponent implements OnInit {
           total_pending_amount: 0,
           total_paid_emis: 0,
           total_unpaid_emis: 0,
-          upcoming_emis_in_next_7_days: 0
+          upcoming_emis_in_next_7_days: 0,
+          total_processing_fees: 0,
+          total_down_payment_received: 0
         };
       }
     });
