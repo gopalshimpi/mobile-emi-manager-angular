@@ -30,9 +30,8 @@ import { EmiScheduleDialogComponent } from '../emi-schedule-dialog/emi-schedule-
     MatSnackBarModule,
     MatTooltipModule,
     MatPaginatorModule,
-    MatNativeDateModule,
-    EmiScheduleDialogComponent
-  ],
+    MatNativeDateModule
+],
   templateUrl: './sales-list.component.html',
   styleUrls: ['./sales-list.component.css']
 })
