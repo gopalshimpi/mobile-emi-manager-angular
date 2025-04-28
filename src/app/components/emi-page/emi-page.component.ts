@@ -7,10 +7,11 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'app-emi-page',
-  imports: [CommonModule, MatTableModule, MatPaginatorModule, MatDialogModule, MatIconModule, MatButtonModule],
+  imports: [CommonModule, MatTableModule, MatPaginatorModule, MatDialogModule, MatIconModule, MatButtonModule, MatCardModule],
   templateUrl: './emi-page.component.html',
   styleUrl: './emi-page.component.scss'
 })
