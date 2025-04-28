@@ -8,6 +8,8 @@ import { AuthService } from '../../shared/services/auth.service';
 import { SalesRecordComponent } from '../sales-record/sales-record.component';
 import { DataSharingService } from '../../shared/services/data-sharing.service';
 import { MatIconModule } from '@angular/material/icon';
+import { MatNativeDateModule } from '@angular/material/core';
+import { SalesService } from '../../shared/services/sales.service';
 
 interface DashboardStats {
   total_sales: number;
@@ -26,7 +28,8 @@ interface DashboardStats {
     MatCardModule,
     MatButtonModule,
     MatDialogModule,
-    MatIconModule
+    MatIconModule,
+    MatNativeDateModule
   ],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
@@ -47,7 +50,9 @@ export class DashboardComponent implements OnInit {
     private authService: AuthService,
     public router: Router,
     private dialog: MatDialog,
-    private dataSharingService: DataSharingService) {
+    private dataSharingService: DataSharingService,
+    private saleService: SalesService
+  ) {
     this.user = this.authService.currentUser;
     this.isSuperAdmin = this.user?.role === 'super_admin';
   }
@@ -57,16 +62,7 @@ export class DashboardComponent implements OnInit {
       this.router.navigate(['/login']);
     }
 
-    // TODO: Fetch stats from your backend service
-    // For now using mock data
-    this.stats = {
-      total_sales: 150,
-      total_sale_amount: 1500000,
-      total_pending_amount: 500000,
-      total_paid_emis: 300,
-      total_unpaid_emis: 50,
-      upcoming_emis_in_next_7_days: 25
-    };
+    this.fetchDashboardStats();
   }
 
   createAdmin() {
@@ -82,6 +78,24 @@ export class DashboardComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.router.navigate(['/sales']);
+      }
+    });
+  }
+
+  fetchDashboardStats() {
+    this.saleService.getDashboardSummery().subscribe({
+      next: (data) => {
+        this.stats = data;
+      },
+      error: (err) => {
+        this.stats = {
+          total_sales: 0,
+          total_sale_amount: 0,
+          total_pending_amount: 0,
+          total_paid_emis: 0,
+          total_unpaid_emis: 0,
+          upcoming_emis_in_next_7_days: 0
+        };
       }
     });
   }

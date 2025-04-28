@@ -30,4 +30,8 @@ export class SalesService {
   deleteSalesRecord(id: number): Observable<any> {
     return this.requestService.delete(`${ApiUrl.backendUri}/sales/${id}`);
   }
+
+  getDashboardSummery() {
+    return this.requestService.get(`${ApiUrl.backendUri}/dashboard/summary`);
+  }
 } 

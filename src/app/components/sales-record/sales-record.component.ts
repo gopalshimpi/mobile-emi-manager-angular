@@ -62,10 +62,10 @@ export class SalesRecordComponent implements OnInit {
       aadhar_number: ['', [Validators.required, Validators.pattern(/^\d{12}$/)]],
       price: ['', [Validators.required, Validators.min(0)]],
       down_payment_amount: ['', [Validators.required, Validators.min(0)]],
-      pending_amount: [{ value: '', disabled: true }],
+      pending_amount: [''],
       number_of_emis: ['', [Validators.required, Validators.min(1)]],
       processing_fees: ['', [Validators.required, Validators.min(0)]],
-      emi_amount: [{ value: '', disabled: true }],
+      emi_amount: [''],
       emi_due_date: ['', Validators.required]
     });
 
