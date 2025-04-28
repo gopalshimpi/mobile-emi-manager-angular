@@ -24,10 +24,10 @@ import { MatButtonModule } from '@angular/material/button';
   styles: [`
     mat-dialog-content {
       min-width: 300px;
-      padding: 20px 0;
+      padding: 20px 0 32px 0;
     }
     mat-dialog-actions {
-      padding: 8px 0;
+      padding: 8px 24px 20px 0;
     }
   `]
 })
