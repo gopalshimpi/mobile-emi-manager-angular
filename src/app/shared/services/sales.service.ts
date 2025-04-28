@@ -38,4 +38,12 @@ export class SalesService {
   getEmiSchedule(saleId: number) {
     return this.requestService.get(`${ApiUrl.backendUri}/sales/${saleId}/emi_schedule`);
   }
+
+  getUpcommingEmis() {
+    return this.requestService.get(`${ApiUrl.backendUri}/emis/upcoming_emis`);
+  }
+
+  markEmiAsPaid(emiId: number) {
+    return this.requestService.patch(`${ApiUrl.backendUri}/emis/${emiId}/mark_as_paid`, {});
+  }
 } 

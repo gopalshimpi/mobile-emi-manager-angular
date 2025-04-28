@@ -8,6 +8,7 @@ import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.compone
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { SalesService } from '../../shared/services/sales.service';
 
 @Component({
   selector: 'app-emi-page',
@@ -17,30 +18,25 @@ import { MatCardModule } from '@angular/material/card';
 })
 
 export class EmiPageComponent implements AfterViewInit {
-  emiList = [
-    {
-      id: 12,
-      emi_amount: '2500.00',
-      due_date: '2025-05-02',
-      status: 'unpaid',
-      sale: {
-        customer_name: 'Rahul Sharma'
-      }
-    }
-  ];
+  emiList: any[] = [];
 
   displayedColumns: string[] = ['customer_name', 'emi_amount', 'due_date', 'status', 'actions'];
-  dataSource = new MatTableDataSource(this.emiList);
+  dataSource = new MatTableDataSource<any>([]);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private dialog: MatDialog) {}
+  constructor(private dialog: MatDialog, private salesService: SalesService) {}
+
+  ngOnInit() {
+    this.fetchUpcommingEmis();
+  }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
   }
 
   markAsPaid(emi: any) {
+    debugger
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '400px',
       data: {
@@ -53,10 +49,32 @@ export class EmiPageComponent implements AfterViewInit {
 
     dialogRef.afterClosed().subscribe((result: boolean) => {
       if (result) {
-        emi.status = 'paid';
-        this.dataSource.data = [...this.emiList]; // Refresh the table
+        this.handleMarkAsPaid(emi.id);
       }
     });
+  }
+
+  fetchUpcommingEmis() {
+    this.salesService.getUpcommingEmis().subscribe({
+      next: resp => {
+        if(resp) {
+          this.emiList = resp;
+          this.dataSource = new MatTableDataSource(this.emiList);
+        }
+      }, error: error => {
+
+      }
+    })
+  }
+
+  handleMarkAsPaid(emiId: number) {
+    this.salesService.markEmiAsPaid(emiId).subscribe({
+      next: resp => {
+        debugger
+      }, error: error => {
+
+      }
+    })
   }
 
   isUnpaid(emi: any): boolean {
