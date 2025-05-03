@@ -65,7 +65,7 @@ export class DashboardComponent implements OnInit {
     { value: 'this_month', label: 'This Month' },
     { value: 'all', label: 'All Time' },
   ];
-  selectedFilter = 'today';
+  selectedFilter = 'all';
   dateRange: { start: Date | null, end: Date | null } = { start: null, end: null };
   dateRangeFilter: string = '';
   isLoading = false;

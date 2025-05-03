@@ -26,3 +26,15 @@ mat-paginator {
   text-align: center;
   vertical-align: middle;
 }
+
+.emi-list-container {
+  padding: 20px;
+  max-width: 100vw;
+  overflow: hidden;
+}
+
+mat-card {
+  margin: 20px auto;
+  max-width: 1400px;
+  width: 100%;
+}
