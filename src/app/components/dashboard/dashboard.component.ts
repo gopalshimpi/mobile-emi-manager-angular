@@ -13,6 +13,7 @@ import { SalesService } from '../../shared/services/sales.service';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerInputEvent, MatDatepickerModule } from '@angular/material/datepicker';
 import { FormsModule } from '@angular/forms';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 interface DashboardStats {
   total_sales: number;
@@ -37,7 +38,8 @@ interface DashboardStats {
     MatNativeDateModule,
     MatSelectModule,
     MatDatepickerModule,
-    FormsModule
+    FormsModule,
+    MatProgressSpinnerModule,
   ],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
@@ -66,6 +68,7 @@ export class DashboardComponent implements OnInit {
   selectedFilter = 'today';
   dateRange: { start: Date | null, end: Date | null } = { start: null, end: null };
   dateRangeFilter: string = '';
+  isLoading = false;
 
   constructor(
     private authService: AuthService,
@@ -104,9 +107,11 @@ export class DashboardComponent implements OnInit {
   }
 
   fetchDashboardStats(isCustomDate: boolean) {
+    this.isLoading = true;
     this.saleService.getDashboardSummery(isCustomDate, this.selectedFilter, this.dateRangeFilter).subscribe({
       next: (data) => {
         this.stats = data;
+        this.isLoading = false;
       },
       error: (err) => {
         this.stats = {
@@ -119,6 +124,7 @@ export class DashboardComponent implements OnInit {
           total_processing_fees: 0,
           total_down_payment_received: 0
         };
+        this.isLoading = false;
       }
     });
   }

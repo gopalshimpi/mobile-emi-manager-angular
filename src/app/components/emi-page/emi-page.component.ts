@@ -40,7 +40,6 @@ export class EmiPageComponent implements AfterViewInit {
   }
 
   markAsPaid(emi: any) {
-    debugger
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '400px',
       data: {
