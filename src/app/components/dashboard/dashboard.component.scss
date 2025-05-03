@@ -133,46 +133,55 @@
 .total-sales {
   background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
   .stat-icon { color: #1976d2; }
+  cursor: pointer;
 }
 
 .total-amount {
-  background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+  background: linear-gradient(135deg, hsl(125, 39%, 94%) 0%, #c8e6c9 100%);
   .stat-icon { color: #388e3c; }
+  cursor: pointer;
 }
 
 .pending-amount {
   background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
   .stat-icon { color: #f57c00; }
+  cursor: pointer;
 }
 
 .paid-emis {
   background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%);
   .stat-icon { color: #0097a7; }
+  cursor: pointer;
 }
 
 .unpaid-emis {
   background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
   .stat-icon { color: #d32f2f; }
+  cursor: pointer;
 }
 
 .upcoming-emis {
   background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%);
   .stat-icon { color: #7b1fa2; }
+  cursor: pointer;
 }
 
 .analytics-card {
   background: linear-gradient(135deg, #e8eaf6 0%, #c5cae9 100%);
   .stat-icon { color: #3949ab; }
+  cursor: pointer;
 }
 
 .trends-card {
   background: linear-gradient(135deg, #f1f8e9 0%, #dcedc8 100%);
   .stat-icon { color: #689f38; }
+  cursor: pointer;
 }
 
 .alerts-card {
   background: linear-gradient(135deg, #fce4ec 0%, #f8bbd0 100%);
   .stat-icon { color: #c2185b; }
+  cursor: pointer;
 }
 
 // Empty cards styling
@@ -183,6 +192,7 @@
   .stat-value, .stat-detail {
     color: rgba(0, 0, 0, 0.5);
   }
+  cursor: pointer;
 }
 
 // Responsive adjustments

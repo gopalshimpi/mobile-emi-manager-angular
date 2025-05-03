@@ -155,4 +155,8 @@ export class DashboardComponent implements OnInit {
     return date.toISOString().split('T')[0]; // Returns "YYYY-MM-DD"
   }
 
+  navigateToEmiPage() {
+    this.router.navigate(['/emi']);
+  }
+
 } 
