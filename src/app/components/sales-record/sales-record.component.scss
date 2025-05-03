@@ -15,13 +15,13 @@
   .sales-form {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 6px;
   }
 
   .form-row {
     display: flex;
     gap: 16px;
-    margin-bottom: 16px;
+    margin-bottom: 0px;
 
     mat-form-field {
       flex: 1;
@@ -60,7 +60,11 @@
 // Custom styling for form fields
 ::ng-deep {
   .mat-mdc-form-field-subscript-wrapper {
-    display: none;
+    padding: none;
+  }
+
+  .mat-mdc-form-field-error-wrapper {
+    padding: 0; 
   }
 
   .mat-mdc-form-field {
