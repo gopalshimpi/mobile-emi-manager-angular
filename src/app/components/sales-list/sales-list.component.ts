@@ -8,7 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatPaginatorModule, MatPaginator } from '@angular/material/paginator';
+import { MatPaginatorModule, MatPaginator, PageEvent } from '@angular/material/paginator';
 import { SalesService } from '../../shared/services/sales.service';
 import { SalesRecord } from '../../shared/models/sales-record.model';
 import { SalesDetailsComponent } from '../sales-details/sales-details.component';
@@ -16,6 +16,7 @@ import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.compone
 import { SalesRecordComponent } from '../sales-record/sales-record.component';
 import { MatNativeDateModule } from '@angular/material/core';
 import { EmiScheduleDialogComponent } from '../emi-schedule-dialog/emi-schedule-dialog.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @Component({
   selector: 'app-sales-list',
@@ -30,8 +31,9 @@ import { EmiScheduleDialogComponent } from '../emi-schedule-dialog/emi-schedule-
     MatSnackBarModule,
     MatTooltipModule,
     MatPaginatorModule,
-    MatNativeDateModule
-],
+    MatNativeDateModule,
+    NgxPaginationModule
+  ],
   templateUrl: './sales-list.component.html',
   styleUrls: ['./sales-list.component.scss']
 })
@@ -50,12 +52,17 @@ export class SalesListComponent implements OnInit {
   dataSource = new MatTableDataSource<SalesRecord>([]);
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
+  salesList: Array<SalesRecord> = [];
+  totalLists = 0;
+  itemsPerPage = 5;
+  page = 1;
+
   constructor(
     private salesService: SalesService,
     private router: Router,
     private dialog: MatDialog,
     private snackBar: MatSnackBar
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.loadSalesRecords();
@@ -66,14 +73,12 @@ export class SalesListComponent implements OnInit {
   }
 
   loadSalesRecords() {
-    this.salesService.getSalesRecords().subscribe({
-      next: (records) => {
-        // Calculate pending amount for each record
-        const recordsWithPendingAmount = records.map(record => ({
-          ...record,
-          pending_amount: record.price - record.down_payment_amount
-        }));
-        this.dataSource.data = recordsWithPendingAmount;
+    this.salesService.getSalesRecords(this.page, this.itemsPerPage).subscribe({
+      next: (resp: any) => {
+        this.salesList = resp.sales;
+        this.totalLists = resp.total_records;
+        this.page = resp.current_page;
+        this.itemsPerPage = resp.per_page;
       },
       error: (error) => {
         console.error('Error loading sales records:', error);
@@ -88,7 +93,7 @@ export class SalesListComponent implements OnInit {
       maxWidth: '90vw',
       data: { salesRecord: record }
     });
-    
+
     dialogRef.afterClosed().subscribe(result => {
       if (result && result.deleted) {
         this.loadSalesRecords();
@@ -112,7 +117,7 @@ export class SalesListComponent implements OnInit {
 
   deleteRecord(record: SalesRecord) {
     if (!record.id) return;
-    
+
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '500px',
       data: {
@@ -164,5 +169,17 @@ export class SalesListComponent implements OnInit {
       duration: 3000,
       panelClass: type === 'success' ? ['success-snackbar'] : ['error-snackbar']
     });
+  }
+
+  onPageChange(event: PageEvent) {
+    this.page = event.pageIndex + 1;  // Page index starts from 0
+    this.itemsPerPage = event.pageSize;
+    this.loadSalesRecords();
+  }
+
+  perPageChange(perPage: any) {
+    this.itemsPerPage = perPage;
+    this.page = 1;
+    this.loadSalesRecords();
   }
 } 

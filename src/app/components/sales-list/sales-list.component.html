@@ -10,7 +10,8 @@
     </mat-card-header>
 
     <mat-card-content>
-      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+      <table mat-table class="mat-elevation-z8"
+        [dataSource]="salesList">
         <!-- Customer Name Column -->
         <ng-container matColumnDef="customer_name">
           <th mat-header-cell *matHeaderCellDef>Customer Name</th>
@@ -82,11 +83,9 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
 
-      <mat-paginator 
-        [pageSize]="10" 
-        [pageSizeOptions]="[5, 10, 25, 100]"
-        aria-label="Select page of sales records">
+      <mat-paginator id="tablePaginator" [pageSize]="itemsPerPage" [pageSizeOptions]="[5, 10, 25, 100]"
+        [length]="totalLists" (page)="onPageChange($event)" (pageSizeChange)="perPageChange($event)">
       </mat-paginator>
     </mat-card-content>
   </mat-card>
-</div> 
+</div>

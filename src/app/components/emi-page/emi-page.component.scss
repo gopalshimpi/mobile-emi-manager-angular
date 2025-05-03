@@ -38,3 +38,9 @@ mat-card {
   max-width: 1400px;
   width: 100%;
 }
+
+mat-card-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
