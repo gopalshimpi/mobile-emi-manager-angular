@@ -31,8 +31,12 @@ export class SalesService {
     return this.requestService.delete(`${ApiUrl.backendUri}/sales/${id}`);
   }
 
-  getDashboardSummery() {
-    return this.requestService.get(`${ApiUrl.backendUri}/dashboard/summary`);
+  getDashboardSummery(isCustomDate: boolean, filterParams: any, customDate: any) {
+    let url = `dashboard/summary?filter=${filterParams}`;
+
+    if(isCustomDate) url = `dashboard/summary?${customDate}`; 
+
+    return this.requestService.get(`${ApiUrl.backendUri}/${url}`);
   }
 
   getEmiSchedule(saleId: number) {

@@ -38,12 +38,14 @@
     <mat-form-field appearance="outline" style="min-width: 220px; margin-right: 12px;">
       <mat-label>Date Range</mat-label>
       <mat-date-range-input [rangePicker]="picker">
-        <input matStartDate placeholder="Start date" [(ngModel)]="dateRange.start">
-        <input matEndDate placeholder="End date" [(ngModel)]="dateRange.end">
+        <input matStartDate placeholder="Start date" [(ngModel)]="dateRange.start" (dateChange)="onDateRangeChange($event)">
+        <input matEndDate placeholder="End date" [(ngModel)]="dateRange.end" (dateChange)="onDateRangeChange($event)">
       </mat-date-range-input>
+      
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-date-range-picker #picker (dateChange)="onDateRangeChange($event)"></mat-date-range-picker>
+      <mat-date-range-picker #picker></mat-date-range-picker>
     </mat-form-field>
+    
   </div>
 
   <div class="stats-grid">

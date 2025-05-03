@@ -11,7 +11,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatNativeDateModule } from '@angular/material/core';
 import { SalesService } from '../../shared/services/sales.service';
 import { MatSelectModule } from '@angular/material/select';
-import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatDatepickerInputEvent, MatDatepickerModule } from '@angular/material/datepicker';
 import { FormsModule } from '@angular/forms';
 
 interface DashboardStats {
@@ -55,15 +55,17 @@ export class DashboardComponent implements OnInit {
     total_processing_fees: 0,
     total_down_payment_received: 0
   };
+
   filterOptions = [
-    { value: 'all', label: 'All Time' },
     { value: 'today', label: 'Today' },
     { value: 'yesterday', label: 'Yesterday' },
     { value: 'this_week', label: 'This Week' },
-    { value: 'this_month', label: 'This Month' }
+    { value: 'this_month', label: 'This Month' },
+    { value: 'all', label: 'All Time' },
   ];
-  selectedFilter = 'all';
+  selectedFilter = 'today';
   dateRange: { start: Date | null, end: Date | null } = { start: null, end: null };
+  dateRangeFilter: string = '';
 
   constructor(
     private authService: AuthService,
@@ -81,7 +83,7 @@ export class DashboardComponent implements OnInit {
       this.router.navigate(['/login']);
     }
 
-    this.fetchDashboardStats();
+    this.fetchDashboardStats(false);
   }
 
   createAdmin() {
@@ -101,8 +103,8 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  fetchDashboardStats() {
-    this.saleService.getDashboardSummery().subscribe({
+  fetchDashboardStats(isCustomDate: boolean) {
+    this.saleService.getDashboardSummery(isCustomDate, this.selectedFilter, this.dateRangeFilter).subscribe({
       next: (data) => {
         this.stats = data;
       },
@@ -129,11 +131,22 @@ export class DashboardComponent implements OnInit {
 
   onFilterChange(value: string) {
     this.selectedFilter = value;
-    // Add logic to filter dashboard data
+    this.fetchDashboardStats(false);
+    this.dateRange.start = null;
+    this.dateRange.end = null;
   }
 
-  onDateRangeChange(event: any) {
-    this.dateRange = event.value;
-    // Add logic to filter dashboard data by date range
+  onDateRangeChange(event: MatDatepickerInputEvent<Date>) {
+    if (this.dateRange.start && this.dateRange.end) {
+      const startDate = this.formatDate(this.dateRange.start);
+      const endDate = this.formatDate(this.dateRange.end);
+      this.dateRangeFilter = `start_date=${startDate}&end_date=${endDate}`;
+      this.fetchDashboardStats(true);
+    }
   }
+
+  formatDate(date: Date): string {
+    return date.toISOString().split('T')[0]; // Returns "YYYY-MM-DD"
+  }
+
 } 
