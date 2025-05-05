@@ -1,7 +1,7 @@
-import { environment } from "../environments/enviromments";
+import { environment } from "../../environments/environment";
 
 export class ApiUrl {
-  static backendUri = `${environment.backend_uri}`;
+  static backendUri = `${environment.apiUrl}`;
   static login = 'login';
   static users = 'users';
 }
