@@ -1,3 +1,3 @@
 export const environment = {
-  backend_uri: 'http://localhost:3000/api',
+  backend_uri: 'https://mobile-emi-manager-app.fly.dev/api'
 }
