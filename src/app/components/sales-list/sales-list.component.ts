@@ -45,8 +45,10 @@ export class SalesListComponent implements OnInit {
     'down_payment_amount',
     'pending_amount',
     'number_of_emis',
+    'remaining_emis',
     'emi_amount',
     'emi_due_date',
+    'next_emi_due_date',
     'actions'
   ];
   dataSource = new MatTableDataSource<SalesRecord>([]);
