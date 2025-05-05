@@ -74,18 +74,27 @@
         <ng-container matColumnDef="actions" stickyEnd>
           <th mat-header-cell *matHeaderCellDef>Actions</th>
           <td mat-cell *matCellDef="let record">
-            <button mat-icon-button color="primary" (click)="viewDetails(record)" matTooltip="View Details">
-              <mat-icon>visibility</mat-icon>
+            <button mat-icon-button [matMenuTriggerFor]="actionMenu" aria-label="Actions">
+              <mat-icon>more_vert</mat-icon>
             </button>
-            <button mat-icon-button color="accent" (click)="editRecord(record)" matTooltip="Edit Record">
-              <mat-icon>edit</mat-icon>
-            </button>
-            <button mat-icon-button color="warn" (click)="deleteRecord(record)" matTooltip="Delete Record">
-              <mat-icon>delete</mat-icon>
-            </button>
-            <button mat-icon-button color="primary" (click)="viewEmiSchedule(record)" matTooltip="View EMI Schedule">
-              <mat-icon>schedule</mat-icon>
-            </button>
+            <mat-menu #actionMenu="matMenu">
+              <button mat-menu-item (click)="viewEmiSchedule(record)">
+                <mat-icon color="primary">schedule</mat-icon>
+                <span>View EMI Schedule</span>
+              </button>
+              <button mat-menu-item (click)="viewDetails(record)">
+                <mat-icon color="primary">visibility</mat-icon>
+                <span>View Details</span>
+              </button>
+              <button mat-menu-item (click)="editRecord(record)">
+                <mat-icon color="accent">edit</mat-icon>
+                <span>Edit</span>
+              </button>
+              <button mat-menu-item (click)="deleteRecord(record)">
+                <mat-icon color="warn">delete</mat-icon>
+                <span>Delete</span>
+              </button>
+            </mat-menu>
           </td>
         </ng-container>
 

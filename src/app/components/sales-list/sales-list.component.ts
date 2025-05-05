@@ -17,6 +17,7 @@ import { SalesRecordComponent } from '../sales-record/sales-record.component';
 import { MatNativeDateModule } from '@angular/material/core';
 import { EmiScheduleDialogComponent } from '../emi-schedule-dialog/emi-schedule-dialog.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { MatMenuModule } from '@angular/material/menu';
 
 @Component({
   selector: 'app-sales-list',
@@ -32,7 +33,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
     MatTooltipModule,
     MatPaginatorModule,
     MatNativeDateModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    MatMenuModule
   ],
   templateUrl: './sales-list.component.html',
   styleUrls: ['./sales-list.component.scss']

@@ -77,27 +77,23 @@ export class SalesRecordComponent implements OnInit {
       if (!this.isEditMode && date) {
         const purchaseDate = new Date(date);
         let year = purchaseDate.getFullYear();
-        let month = purchaseDate.getMonth();
-        const day = purchaseDate.getDate();
+        let month = purchaseDate.getMonth() + 1; // Move to next month
     
-        if (day > 5) {
-          // Move to next month
-          month += 1;
-          if (month > 11) {
-            month = 0; // January
-            year += 1;
-          }
+        // Handle December to January transition
+        if (month > 11) {
+          month = 0; // January
+          year += 1;
         }
     
-        // Always set due date on 5th
-        const emiDueDate = new Date(year, month, 5);
+        const emiDueDate = new Date(year, month, 5); // Set to 5th of next month
     
         this.salesForm.patchValue(
           { emi_due_date: emiDueDate },
           { emitEvent: false }
         );
       }
-    });    
+    });
+    
   }
 
   ngOnInit() {
