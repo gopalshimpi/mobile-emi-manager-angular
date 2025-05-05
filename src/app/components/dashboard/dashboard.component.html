@@ -145,20 +145,16 @@
       </mat-card-content>
     </mat-card>
 
-    <!-- Alerts Card -->
-    <!-- <mat-card class="stat-card alerts-card">
+    <!-- Overdue  Card -->
+    <mat-card class="stat-card alerts-card" (click)="navigateToOverdueEmi()">
       <mat-card-header>
         <mat-icon class="stat-icon">notifications</mat-icon>
-        <mat-card-title class="stat-title">Alerts</mat-card-title>
+        <mat-card-title class="stat-title">Overdue EMI</mat-card-title>
       </mat-card-header>
       <mat-card-content>
-        <div class="stat-value">Coming Soon</div>
-        <div class="stat-detail">Important alerts will appear here</div>
+        <div class="stat-value">₹ {{stats.overdue_emis | number:'1.0-0'}}</div>
+        <div class="stat-detail">Overdue Emi Amounts</div>
       </mat-card-content>
-    </mat-card> -->
+    </mat-card>
   </div>
 </div> 
-
-<!-- <div *ngIf="isLoading" class="spinner-overlay">
-  <mat-spinner diameter="80"></mat-spinner>
-</div> -->

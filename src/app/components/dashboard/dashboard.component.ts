@@ -24,6 +24,7 @@ interface DashboardStats {
   upcoming_emis_in_next_7_days: number;
   total_processing_fees: number;
   total_down_payment_received: number;
+  overdue_emis: number;
 }
 
 @Component({
@@ -55,7 +56,8 @@ export class DashboardComponent implements OnInit {
     total_unpaid_emis: 0,
     upcoming_emis_in_next_7_days: 0,
     total_processing_fees: 0,
-    total_down_payment_received: 0
+    total_down_payment_received: 0,
+    overdue_emis: 0
   };
 
   filterOptions = [
@@ -122,7 +124,8 @@ export class DashboardComponent implements OnInit {
           total_unpaid_emis: 0,
           upcoming_emis_in_next_7_days: 0,
           total_processing_fees: 0,
-          total_down_payment_received: 0
+          total_down_payment_received: 0,
+          overdue_emis: 0
         };
         this.isLoading = false;
       }
@@ -157,6 +160,14 @@ export class DashboardComponent implements OnInit {
 
   navigateToEmiPage() {
     this.router.navigate(['/emi']);
+  }
+
+  navigateToOverdueEmi() {
+    this.router.navigate(['/emi'], { 
+      queryParams: { 
+        overdue: true, 
+      } 
+    });
   }
 
 } 

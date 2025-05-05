@@ -1,11 +1,16 @@
 .paid-status {
-  color: #388e3c;
-  font-weight: bold;
+  color: green;
+  font-weight: 500;
 }
 
 .unpaid-status {
-  color: #d32f2f;
-  font-weight: bold;
+  color: red;
+  font-weight: 500;
+}
+
+.overdue-status {
+  color: darkred;
+  font-weight: 600;
 }
 
 .mat-elevation-z8 {
@@ -43,4 +48,9 @@ mat-card-header {
   display: flex;
   align-items: center;
   margin-bottom: 20px;
+}
+
+.tab-content {
+  padding: 16px;
+  overflow-x: auto;
 }

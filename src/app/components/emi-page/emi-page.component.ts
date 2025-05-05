@@ -10,26 +10,48 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { SalesService } from '../../shared/services/sales.service';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-emi-page',
-  imports: [CommonModule, MatTableModule, MatPaginatorModule, MatDialogModule, MatIconModule, MatButtonModule, MatCardModule, 
-    MatSnackBarModule],
+  imports: [
+    CommonModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatDialogModule,
+    MatIconModule,
+    MatButtonModule,
+    MatCardModule,
+    MatSnackBarModule,
+    MatTooltipModule,
+    MatTabsModule
+  ],
   templateUrl: './emi-page.component.html',
   styleUrl: './emi-page.component.scss'
 })
 
 export class EmiPageComponent implements AfterViewInit {
   emiList: any[] = [];
+  overDueEmiList: any[] = [];
+  isOverdueTab = false;
 
   displayedColumns: string[] = ['customer_name', 'emi_amount', 'due_date', 'status', 'actions'];
+  overdueDisplayedColumns: string[] = ['customer_name', 'emi_amount', 'due_date', 'days_overdue', 'actions'];
   dataSource = new MatTableDataSource<any>([]);
+  overdueDataSource = new MatTableDataSource<any>([]);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(private dialog: MatDialog,
      private salesService: SalesService,
-     private snackBar: MatSnackBar) {}
+     private snackBar: MatSnackBar, private route: ActivatedRoute) {
+        this.route.queryParams.subscribe(params => {
+          this.isOverdueTab = params['overdue'];      
+        });
+      
+     }
 
   ngOnInit() {
     this.fetchUpcommingEmis();
@@ -61,8 +83,10 @@ export class EmiPageComponent implements AfterViewInit {
     this.salesService.getUpcommingEmis().subscribe({
       next: resp => {
         if(resp) {
-          this.emiList = resp;
+          this.emiList = resp.upcoming_emis;
+          this.overDueEmiList = resp.overdue_emis;
           this.dataSource = new MatTableDataSource(this.emiList);
+          this.overdueDataSource = new MatTableDataSource(this.overDueEmiList);
         }
       }, error: error => {
 
@@ -90,5 +114,19 @@ export class EmiPageComponent implements AfterViewInit {
       duration: 3000,
       panelClass: type === 'success' ? ['success-snackbar'] : ['error-snackbar']
     });
+  }
+
+  private isOverdue(emi: any): boolean {
+    if (emi.status === 'paid') return false;
+    const dueDate = new Date(emi.due_date);
+    const today = new Date();
+    return dueDate < today;
+  }
+
+  getDaysOverdue(dueDate: string): number {
+    const due = new Date(dueDate);
+    const today = new Date();
+    const diffTime = Math.abs(today.getTime() - due.getTime());
+    return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
   }
 }
