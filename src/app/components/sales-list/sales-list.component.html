@@ -36,22 +36,28 @@
           <td mat-cell *matCellDef="let record">{{record.down_payment_amount | currency:'INR'}}</td>
         </ng-container>
 
-        <!-- Pending Amount Column -->
         <ng-container matColumnDef="pending_amount">
-          <th mat-header-cell *matHeaderCellDef>Pending Amount</th>
+          <th mat-header-cell *matHeaderCellDef>Loan Amount</th>
           <td mat-cell *matCellDef="let record">{{record.pending_amount | currency:'INR'}}</td>
         </ng-container>
 
-        <!-- Number of EMIs Column -->
-        <ng-container matColumnDef="number_of_emis">
-          <th mat-header-cell *matHeaderCellDef>No. of EMIs</th>
-          <td mat-cell *matCellDef="let record">{{record.number_of_emis}}</td>
+        <!-- Pending Amount Column -->
+        <ng-container matColumnDef="outstanding_amount">
+          <th mat-header-cell *matHeaderCellDef>Pending Amount</th>
+          <td mat-cell *matCellDef="let record">{{record.outstanding_amount | currency:'INR'}}</td>
         </ng-container>
 
-        <ng-container matColumnDef="remaining_emis">
+      
+        <!-- Number of EMIs Column -->
+        <ng-container matColumnDef="number_of_emis">
+          <th mat-header-cell *matHeaderCellDef>EMI Paid / Total<th>
+          <td mat-cell *matCellDef="let record">{{record.number_of_emis - record.remaining_emis }} / {{record.number_of_emis}}</td>
+        </ng-container>
+
+        <!-- <ng-container matColumnDef="remaining_emis">
           <th mat-header-cell *matHeaderCellDef>Remaining EMIs</th>
           <td mat-cell *matCellDef="let record">{{record.remaining_emis}}</td>
-        </ng-container>
+        </ng-container> -->
 
         <!-- EMI Amount Column -->
         <ng-container matColumnDef="emi_amount">
@@ -60,10 +66,10 @@
         </ng-container>
 
         <!-- EMI Due Date Column -->
-        <ng-container matColumnDef="emi_due_date">
+        <!-- <ng-container matColumnDef="emi_due_date">
           <th mat-header-cell *matHeaderCellDef>EMI Due Date</th>
           <td mat-cell *matCellDef="let record">{{(record.emi_due_date || record.next_emi_due_date) | date:'mediumDate'}}</td>
-        </ng-container>
+        </ng-container> -->
 
         <ng-container matColumnDef="next_emi_due_date">
           <th mat-header-cell *matHeaderCellDef>Next Emi Due Date</th>

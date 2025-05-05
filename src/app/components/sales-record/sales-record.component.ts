@@ -78,29 +78,29 @@ export class SalesRecordComponent implements OnInit {
         const purchaseDate = new Date(date);
         let year = purchaseDate.getFullYear();
         let month = purchaseDate.getMonth() + 1; // Move to next month
-    
+
         // Handle December to January transition
         if (month > 11) {
           month = 0; // January
           year += 1;
         }
-    
+
         const emiDueDate = new Date(year, month, 5); // Set to 5th of next month
-    
+
         this.salesForm.patchValue(
           { emi_due_date: emiDueDate },
           { emitEvent: false }
         );
       }
     });
-    
+
   }
 
   ngOnInit() {
     // Check for recordId in route params or dialog data
     const routeId = this.route.snapshot.queryParams['id'];
     const dialogId = this.data?.recordId;
-    
+
     if (routeId || dialogId) {
       this.isEditMode = true;
       this.recordId = routeId || dialogId;
@@ -112,12 +112,12 @@ export class SalesRecordComponent implements OnInit {
 
   private calculateAmounts() {
     const price = this.salesForm.get('price')?.value || 0;
-    const downPayment = this.salesForm.get('down_payment_amount')?.value || 0;
-    const processingFees = this.salesForm.get('processing_fees')?.value || 0;
-    const numberOfEmis = this.salesForm.get('number_of_emis')?.value || 0;
+    const downPayment = parseInt(this.salesForm.get('down_payment_amount')?.value) || 0;
+    const processingFees = parseInt(this.salesForm.get('processing_fees')?.value) || 0;
+    const numberOfEmis = parseInt(this.salesForm.get('number_of_emis')?.value) || 0;
 
     const pendingAmount = price - downPayment;
-    const emiAmount = numberOfEmis > 0 ? (pendingAmount + processingFees) / numberOfEmis : 0;
+    const emiAmount = numberOfEmis > 0 ? Math.ceil((pendingAmount + processingFees) / numberOfEmis) : 0;
 
     this.salesForm.patchValue({
       pending_amount: pendingAmount,
@@ -144,7 +144,7 @@ export class SalesRecordComponent implements OnInit {
   onSubmit() {
     if (this.salesForm.valid) {
       const formData = this.salesForm.getRawValue();
-      
+
       if (this.isEditMode && this.recordId) {
         this.salesService.updateSalesRecord(parseInt(this.recordId), formData).subscribe({
           next: () => {
