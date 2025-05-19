@@ -24,6 +24,7 @@ import { AuthService } from '../../shared/services/auth.service';
 export class HeaderComponent implements OnInit {
   user: any;
   isSuperAdmin = false;
+  shopName = 'My Shop';
 
   constructor(
     private authService: AuthService,
@@ -37,6 +38,8 @@ export class HeaderComponent implements OnInit {
     if (!this.authService.currentUser) {
       this.router.navigate(['/login']);
     }
+
+    this.shopName = this.user.shop_name;
   }
 
   logout() {

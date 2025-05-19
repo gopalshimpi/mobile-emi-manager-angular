@@ -15,6 +15,14 @@
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Shop Name</mat-label>
+          <input matInput formControlName="shop_name" placeholder="Enter shop name">
+          <mat-error *ngIf="shop_name?.hasError('required')">
+            Shop name is required
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
           <mat-label>Email</mat-label>
           <input matInput formControlName="email" placeholder="Enter user's email">
           <mat-error *ngIf="email?.hasError('required')">

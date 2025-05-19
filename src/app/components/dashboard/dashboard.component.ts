@@ -71,6 +71,7 @@ export class DashboardComponent implements OnInit {
   dateRange: { start: Date | null, end: Date | null } = { start: null, end: null };
   dateRangeFilter: string = '';
   isLoading = false;
+  shopName = 'My Shop';
 
   constructor(
     private authService: AuthService,
@@ -81,6 +82,7 @@ export class DashboardComponent implements OnInit {
   ) {
     this.user = this.authService.currentUser;
     this.isSuperAdmin = this.user?.role === 'admin';
+    this.shopName = this.user.shop_name;
   }
 
   ngOnInit() {

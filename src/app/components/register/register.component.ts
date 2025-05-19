@@ -45,7 +45,8 @@ export class RegisterComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       phone: ['', [Validators.pattern('^[0-9]{10}$')]],
-      role: [UserRole.USER, [Validators.required]]
+      role: [UserRole.USER, [Validators.required]],
+      shop_name: ['', [Validators.required]]
     });
   }
 
@@ -68,7 +69,8 @@ export class RegisterComponent implements OnInit {
         contact_number: this.registerForm.value.phone,
         password: this.registerForm.value.password,
         password_confirmation: this.registerForm.value.password_confirmation,
-        role: this.registerForm.value.role
+        role: this.registerForm.value.role,
+        shop_name: this.registerForm.value.shop_name
       }
 
       const payload = { user: params }
@@ -105,5 +107,9 @@ export class RegisterComponent implements OnInit {
 
   get role() {
     return this.registerForm.get('role');
+  }
+
+  get shop_name() {
+    return this.registerForm.get('shop_name');
   }
 } 
