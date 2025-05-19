@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://mobile-emi-manager-app.fly.dev/api',
+  apiUrl: 'https://api.jaihindsportsclub.in/api',
 }; 
