@@ -32,7 +32,7 @@ export class RegisterComponent implements OnInit {
   hidePassword = true;
   showErrorMsg = false;
   errorMessage = '';
-  userRoles = Object.values(UserRole.USER);
+  userRoles = [UserRole.USER];
   isSuperAdmin = false;
 
   constructor(

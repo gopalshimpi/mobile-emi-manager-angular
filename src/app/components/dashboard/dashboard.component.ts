@@ -80,7 +80,7 @@ export class DashboardComponent implements OnInit {
     private saleService: SalesService
   ) {
     this.user = this.authService.currentUser;
-    this.isSuperAdmin = this.user?.role === 'super_admin';
+    this.isSuperAdmin = this.user?.role === 'admin';
   }
 
   ngOnInit() {
