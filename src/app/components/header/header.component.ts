@@ -39,7 +39,10 @@ export class HeaderComponent implements OnInit {
       this.router.navigate(['/login']);
     }
 
-    this.shopName = this.user.shop_name;
+    if(this.user?.shop_name) {
+      this.shopName = this.user?.shop_name;
+    }
+    
   }
 
   logout() {
