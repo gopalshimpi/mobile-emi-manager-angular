@@ -58,8 +58,8 @@ export class SalesRecordComponent implements OnInit {
       customer_mobile_number: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
       mobile_model: ['', Validators.required],
       date_of_purchase: ['', Validators.required],
-      pan_number: ['', [Validators.required, Validators.pattern(/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/)]],
-      aadhar_number: ['', [Validators.required, Validators.pattern(/^\d{12}$/)]],
+      pan_number: ['', [Validators.pattern(/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/)]],
+      aadhar_number: ['', [Validators.pattern(/^\d{12}$/)]],
       price: ['', [Validators.required, Validators.min(0)]],
       down_payment_amount: ['', [Validators.required, Validators.min(0)]],
       pending_amount: [''],
@@ -116,8 +116,8 @@ export class SalesRecordComponent implements OnInit {
     const processingFees = parseInt(this.salesForm.get('processing_fees')?.value) || 0;
     const numberOfEmis = parseInt(this.salesForm.get('number_of_emis')?.value) || 0;
 
-    const pendingAmount = price - downPayment;
-    const emiAmount = numberOfEmis > 0 ? Math.ceil((pendingAmount + processingFees) / numberOfEmis) : 0;
+    const pendingAmount = price - downPayment + processingFees;
+    const emiAmount = numberOfEmis > 0 ? Math.ceil((pendingAmount) / numberOfEmis) : 0;
 
     this.salesForm.patchValue({
       pending_amount: pendingAmount,

@@ -92,8 +92,11 @@
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Pending Amount</mat-label>
-          <input matInput type="number" formControlName="pending_amount" placeholder="Pending amount" readonly>
+          <mat-label>Processing Fees</mat-label>
+          <input matInput type="text" formControlName="processing_fees" placeholder="Enter processing fees">
+          <mat-error *ngIf="processing_fees?.invalid && processing_fees?.touched">
+            Please enter a valid processing fees amount
+          </mat-error>
         </mat-form-field>
       </div>
 
@@ -107,11 +110,8 @@
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Processing Fees</mat-label>
-          <input matInput type="text" formControlName="processing_fees" placeholder="Enter processing fees">
-          <mat-error *ngIf="processing_fees?.invalid && processing_fees?.touched">
-            Please enter a valid processing fees amount
-          </mat-error>
+          <mat-label>Pending Amount</mat-label>
+          <input matInput type="number" formControlName="pending_amount" placeholder="Pending amount" readonly>
         </mat-form-field>
       </div>
 
