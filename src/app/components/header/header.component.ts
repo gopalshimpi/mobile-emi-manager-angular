@@ -31,7 +31,7 @@ export class HeaderComponent implements OnInit {
     private router: Router
   ) {
     this.user = this.authService.currentUser;
-    this.isSuperAdmin = this.user?.role === 'super_admin';
+    this.isSuperAdmin = this.authService.isSuperAdmin;
   }
 
   ngOnInit() {

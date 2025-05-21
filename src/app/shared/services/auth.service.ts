@@ -41,6 +41,10 @@ export class AuthService {
     return this.storageService.get(AppConst.currentUserKey);
   }
 
+  get isSuperAdmin(): boolean {
+     return this.currentUser?.role === 'admin';
+  }
+
   getToken() {
     return this.storageService.get(AppConst.token);
   }

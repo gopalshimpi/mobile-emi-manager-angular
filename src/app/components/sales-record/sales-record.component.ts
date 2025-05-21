@@ -173,8 +173,13 @@ export class SalesRecordComponent implements OnInit {
           },
           error: (error) => {
             this.showErrorMsg = true;
-            this.errorMessage = 'Failed to create sales record. Please try again.';
-            this.showSnackBar('Error creating sales record', 'error');
+            if(error.error.errors) {
+              this.errorMessage = error.error.errors[0];
+              this.showSnackBar(this.errorMessage, 'error');
+            } else {
+              this.errorMessage = 'Failed to create sales record. Please try again.';
+              this.showSnackBar('Error creating sales record', 'error');
+            }
           }
         });
       }

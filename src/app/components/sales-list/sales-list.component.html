@@ -96,10 +96,10 @@
                 <mat-icon color="accent">edit</mat-icon>
                 <span>Edit</span>
               </button>
-              <!-- <button mat-menu-item  (click)="deleteRecord(record)">
+              <button mat-menu-item  (click)="deleteRecord(record)" *ngIf="isSuperAdmin">
                 <mat-icon color="warn">delete</mat-icon>
                 <span>Delete</span>
-              </button> -->
+              </button>
             </mat-menu>
           </td>
         </ng-container>

@@ -81,8 +81,8 @@ export class DashboardComponent implements OnInit {
     private saleService: SalesService
   ) {
     this.user = this.authService.currentUser;
-    this.isSuperAdmin = this.user?.role === 'admin';
     this.shopName = this.user.shop_name;
+    this.isSuperAdmin = this.authService.isSuperAdmin;
   }
 
   ngOnInit() {

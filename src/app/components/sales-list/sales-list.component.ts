@@ -18,6 +18,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { EmiScheduleDialogComponent } from '../emi-schedule-dialog/emi-schedule-dialog.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { MatMenuModule } from '@angular/material/menu';
+import { AuthService } from '../../shared/services/auth.service';
 
 @Component({
   selector: 'app-sales-list',
@@ -52,7 +53,7 @@ export class SalesListComponent implements OnInit {
     'emi_amount',
     // 'emi_due_date',
     'next_emi_due_date',
-   
+
     'actions'
   ];
   dataSource = new MatTableDataSource<SalesRecord>([]);
@@ -62,16 +63,19 @@ export class SalesListComponent implements OnInit {
   totalLists = 0;
   itemsPerPage = 5;
   page = 1;
+  isSuperAdmin = false;
 
   constructor(
     private salesService: SalesService,
     private router: Router,
     private dialog: MatDialog,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private authService: AuthService
   ) { }
 
   ngOnInit() {
     this.loadSalesRecords();
+    this.isSuperAdmin = this.authService.isSuperAdmin;
   }
 
   ngAfterViewInit() {

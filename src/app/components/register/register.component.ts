@@ -51,8 +51,7 @@ export class RegisterComponent implements OnInit {
   }
 
   ngOnInit() {
-    const currentUser = this.authService.currentUser;
-    this.isSuperAdmin = currentUser?.role === UserRole.ADMIN;
+    this.isSuperAdmin = this.authService.isSuperAdmin;
 
     if (!this.isSuperAdmin) {
       this.router.navigate(['/dashboard']);
