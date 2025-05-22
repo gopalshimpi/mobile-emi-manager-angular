@@ -130,6 +130,12 @@ export class SalesRecordComponent implements OnInit {
     this.salesService.getSalesRecord(parseInt(id)).subscribe({
       next: (record) => {
         this.salesForm.patchValue(record);
+        // Disable specific fields in edit mode
+        this.salesForm.get('mobile_imei_number')?.disable();
+        this.salesForm.get('date_of_purchase')?.disable();
+        this.salesForm.get('down_payment_amount')?.disable();
+        this.salesForm.get('processing_fees')?.disable();
+        this.salesForm.get('number_of_emis')?.disable();
         this.isLoading = false;
       },
       error: (error) => {
@@ -143,6 +149,15 @@ export class SalesRecordComponent implements OnInit {
 
   onSubmit() {
     if (this.salesForm.valid) {
+      // Enable disabled fields before getting form value
+      if (this.isEditMode) {
+        this.salesForm.get('mobile_imei_number')?.enable();
+        this.salesForm.get('date_of_purchase')?.enable();
+        this.salesForm.get('down_payment_amount')?.enable();
+        this.salesForm.get('processing_fees')?.enable();
+        this.salesForm.get('number_of_emis')?.enable();
+      }
+      
       const formData = this.salesForm.getRawValue();
 
       if (this.isEditMode && this.recordId) {
@@ -159,6 +174,14 @@ export class SalesRecordComponent implements OnInit {
             this.showErrorMsg = true;
             this.errorMessage = 'Failed to update sales record. Please try again.';
             this.showSnackBar('Error updating sales record', 'error');
+            // Re-disable fields after error
+            if (this.isEditMode) {
+              this.salesForm.get('mobile_imei_number')?.disable();
+              this.salesForm.get('date_of_purchase')?.disable();
+              this.salesForm.get('down_payment_amount')?.disable();
+              this.salesForm.get('processing_fees')?.disable();
+              this.salesForm.get('number_of_emis')?.disable();
+            }
           }
         });
       } else {
