@@ -70,7 +70,7 @@ export class SalesListComponent implements OnInit {
 
   salesList: Array<SalesRecord> = [];
   totalLists = 0;
-  itemsPerPage = 5;
+  itemsPerPage = 10;
   page = 1;
   isSuperAdmin = false;
   searchTerm: string = '';
