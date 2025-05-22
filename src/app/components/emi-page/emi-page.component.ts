@@ -37,8 +37,8 @@ export class EmiPageComponent implements AfterViewInit {
   overDueEmiList: any[] = [];
   isOverdueTab = false;
 
-  displayedColumns: string[] = ['customer_name', 'emi_amount', 'due_date', 'status', 'actions'];
-  overdueDisplayedColumns: string[] = ['customer_name', 'emi_amount', 'due_date', 'days_overdue', 'actions'];
+  displayedColumns: string[] = ['customer_name','customer_mobile_number', 'emi_amount', 'due_date', 'status', 'actions'];
+  overdueDisplayedColumns: string[] = ['customer_name', 'customer_mobile_number','emi_amount', 'due_date', 'days_overdue', 'actions'];
   dataSource = new MatTableDataSource<any>([]);
   overdueDataSource = new MatTableDataSource<any>([]);
 
