@@ -53,6 +53,7 @@ export class SalesListComponent implements OnInit {
   displayedColumns: string[] = [
     'customer_name',
     'mobile_model',
+    'customer_mobile_number',
     'price',
     'down_payment_amount',
     'pending_amount',
