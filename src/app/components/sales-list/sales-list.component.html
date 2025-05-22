@@ -3,6 +3,11 @@
     <mat-card-header>
       <mat-card-title>Sales Records</mat-card-title>
       <div class="spacer"></div>
+      <mat-form-field appearance="outline" class="search-field">
+        <mat-label>Search by Mobile Number</mat-label>
+        <input matInput placeholder="Enter mobile number" (input)="onSearch($event)">
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
       <button mat-raised-button color="primary" (click)="createNewRecord()">
         <mat-icon>add</mat-icon>
         New Record
@@ -10,6 +15,9 @@
     </mat-card-header>
 
     <mat-card-content>
+      <div *ngIf="isLoading" class="loading-spinner">
+        <mat-spinner diameter="40"></mat-spinner>
+      </div>
       <table mat-table class="mat-elevation-z8"
         [dataSource]="salesList">
         <!-- Customer Name Column -->

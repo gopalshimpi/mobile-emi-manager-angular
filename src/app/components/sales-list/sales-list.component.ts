@@ -19,6 +19,11 @@ import { EmiScheduleDialogComponent } from '../emi-schedule-dialog/emi-schedule-
 import { NgxPaginationModule } from 'ngx-pagination';
 import { MatMenuModule } from '@angular/material/menu';
 import { AuthService } from '../../shared/services/auth.service';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { FormsModule } from '@angular/forms';
+import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-sales-list',
@@ -35,7 +40,11 @@ import { AuthService } from '../../shared/services/auth.service';
     MatPaginatorModule,
     MatNativeDateModule,
     NgxPaginationModule,
-    MatMenuModule
+    MatMenuModule,
+    MatFormFieldModule,
+    MatInputModule,
+    FormsModule,
+    MatProgressSpinnerModule
   ],
   templateUrl: './sales-list.component.html',
   styleUrls: ['./sales-list.component.scss']
@@ -64,6 +73,9 @@ export class SalesListComponent implements OnInit {
   itemsPerPage = 5;
   page = 1;
   isSuperAdmin = false;
+  searchTerm: string = '';
+  private searchSubject = new Subject<string>();
+  isLoading = false;
 
   constructor(
     private salesService: SalesService,
@@ -71,7 +83,15 @@ export class SalesListComponent implements OnInit {
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
     private authService: AuthService
-  ) { }
+  ) {
+    this.searchSubject.pipe(
+      debounceTime(300),
+      distinctUntilChanged()
+    ).subscribe(searchTerm => {
+      this.page = 1;
+      this.loadSalesRecords();
+    });
+  }
 
   ngOnInit() {
     this.loadSalesRecords();
@@ -82,17 +102,25 @@ export class SalesListComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
   }
 
+  onSearch(event: any) {
+    this.searchTerm = event.target.value;
+    this.searchSubject.next(this.searchTerm);
+  }
+
   loadSalesRecords() {
-    this.salesService.getSalesRecords(this.page, this.itemsPerPage).subscribe({
+    this.isLoading = true;
+    this.salesService.getSalesRecords(this.page, this.itemsPerPage, this.searchTerm).subscribe({
       next: (resp: any) => {
         this.salesList = resp.sales;
         this.totalLists = resp.total_records;
         this.page = resp.current_page;
         this.itemsPerPage = resp.per_page;
+        this.isLoading = false;
       },
       error: (error) => {
         console.error('Error loading sales records:', error);
         this.showSnackBar('Error loading sales records', 'error');
+        this.isLoading = false;
       }
     });
   }

@@ -15,8 +15,12 @@ export class SalesService {
     return this.requestService.post(`${ApiUrl.backendUri}/sales`, record);
   }
 
-  getSalesRecords(page: any, perPage: any): Observable<SalesRecord[]> { 
-    return this.requestService.get(`${ApiUrl.backendUri}/sales?page=${page}&per_page=${perPage}`);
+  getSalesRecords(page: any, perPage: any, search?: string): Observable<SalesRecord[]> { 
+    let url = `${ApiUrl.backendUri}/sales?page=${page}&per_page=${perPage}`;
+    if (search) {
+      url += `&customer_mobile_number=${search}`;
+    }
+    return this.requestService.get(url);
   }
 
   getSalesRecord(id: number): Observable<SalesRecord> {
