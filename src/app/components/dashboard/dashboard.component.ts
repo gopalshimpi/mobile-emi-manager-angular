@@ -21,10 +21,12 @@ interface DashboardStats {
   total_pending_amount: number;
   total_paid_emis: number;
   total_unpaid_emis: number;
-  upcoming_emis_in_next_7_days: number;
+  upcoming_emi_amount_on_next_due_date: number;
   total_processing_fees: number;
   total_down_payment_received: number;
   overdue_emis: number;
+  upcoming_emi_count_on_next_due_date: number
+  overdue_emi_amount: number
 }
 
 @Component({
@@ -41,6 +43,7 @@ interface DashboardStats {
     MatDatepickerModule,
     FormsModule,
     MatProgressSpinnerModule,
+    MatCardModule
   ],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
@@ -54,10 +57,12 @@ export class DashboardComponent implements OnInit {
     total_pending_amount: 0,
     total_paid_emis: 0,
     total_unpaid_emis: 0,
-    upcoming_emis_in_next_7_days: 0,
+    upcoming_emi_amount_on_next_due_date: 0,
     total_processing_fees: 0,
     total_down_payment_received: 0,
-    overdue_emis: 0
+    overdue_emis: 0,
+    upcoming_emi_count_on_next_due_date: 0,
+    overdue_emi_amount: 0
   };
 
   filterOptions = [
@@ -124,10 +129,12 @@ export class DashboardComponent implements OnInit {
           total_pending_amount: 0,
           total_paid_emis: 0,
           total_unpaid_emis: 0,
-          upcoming_emis_in_next_7_days: 0,
+          upcoming_emi_amount_on_next_due_date: 0,
           total_processing_fees: 0,
           total_down_payment_received: 0,
-          overdue_emis: 0
+          overdue_emis: 0,
+          upcoming_emi_count_on_next_due_date: 0,
+          overdue_emi_amount: 0
         };
         this.isLoading = false;
       }
