@@ -47,56 +47,20 @@
 
   <div class="stats-grid">
 
-     <!-- Upcoming EMIs Card -->
-    <mat-card class="stat-card upcoming-emis" (click)="navigateToEmiPage()">
+    <!-- Total Sales Card -->
+    <mat-card class="stat-card total-sales">
       <mat-card-header>
-        <mat-icon class="stat-icon">upcoming</mat-icon>
-        <mat-card-title class="stat-title">Upcoming EMIs</mat-card-title>
+        <mat-icon class="stat-icon">shopping_cart</mat-icon>
+        <mat-card-title class="stat-title">Total Sales</mat-card-title>
       </mat-card-header>
       <mat-card-content>
-        <div class="stat-value">₹ {{stats.upcoming_emi_amount_on_next_due_date | number:'1.0-0'}}</div>
-        <div class="stat-detail">Upcoming Emi ({{stats.upcoming_emi_count_on_next_due_date}}) Amount On Next Due Date</div>
+        <div class="stat-value">{{stats.total_sales}}</div>
+        <div class="stat-detail">Total number of sales</div>
       </mat-card-content>
     </mat-card>
 
-    <!-- Overdue  Card -->
-    <mat-card class="stat-card alerts-card" (click)="navigateToOverdueEmi()">
-      <mat-card-header>
-        <mat-icon class="stat-icon">notifications</mat-icon>
-        <mat-card-title class="stat-title">Overdue EMI Amount</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <div class="stat-value">{{stats.overdue_emi_amount | number:'1.0-0'}}</div>
-        <div class="stat-detail">Overdue Emi ({{stats.overdue_emis}}) Amounts</div>
-      </mat-card-content>
-    </mat-card>
-
-      <!-- Paid EMIs Card -->
-     <mat-card class="stat-card paid-emis">
-      <mat-card-header>
-        <mat-icon class="stat-icon">check_circle</mat-icon>
-        <mat-card-title class="stat-title">Paid EMIs</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <div class="stat-value">{{stats.total_paid_emis}}</div>
-        <div class="stat-detail">Total EMIs paid</div>
-      </mat-card-content>
-    </mat-card>
-
-    <!-- Unpaid EMIs Card -->
-    <mat-card class="stat-card unpaid-emis">
-      <mat-card-header>
-        <mat-icon class="stat-icon">error</mat-icon>
-        <mat-card-title class="stat-title">Unpaid EMIs</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <div class="stat-value">{{stats.total_unpaid_emis}}</div>
-        <div class="stat-detail">Total EMIs pending</div>
-      </mat-card-content>
-    </mat-card>
-
-     <!-- Total Sale Amount Card -->
-     <mat-card class="stat-card total-amount">
+    <!-- Total Sale Amount Card -->
+    <mat-card class="stat-card total-amount">
       <mat-card-header>
         <mat-icon class="stat-icon">account_balance_wallet</mat-icon>
         <mat-card-title class="stat-title">Total Sale Amount</mat-card-title>
@@ -131,17 +95,53 @@
       </mat-card-content>
     </mat-card>
 
-     <!-- Total Sales Card -->
-    <mat-card class="stat-card total-sales">
+    <!-- Paid EMIs Card -->
+    <mat-card class="stat-card paid-emis">
       <mat-card-header>
-        <mat-icon class="stat-icon">shopping_cart</mat-icon>
-        <mat-card-title class="stat-title">Total Sales</mat-card-title>
+        <mat-icon class="stat-icon">check_circle</mat-icon>
+        <mat-card-title class="stat-title">Paid EMIs</mat-card-title>
       </mat-card-header>
       <mat-card-content>
-        <div class="stat-value">{{stats.total_sales}}</div>
-        <div class="stat-detail">Total number of sales</div>
+        <div class="stat-value">{{stats.total_paid_emis}}</div>
+        <div class="stat-detail">Total EMIs paid</div>
       </mat-card-content>
     </mat-card>
-    
+
+    <!-- Unpaid EMIs Card -->
+    <mat-card class="stat-card unpaid-emis">
+      <mat-card-header>
+        <mat-icon class="stat-icon">error</mat-icon>
+        <mat-card-title class="stat-title">Unpaid EMIs</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="stat-value">{{stats.total_unpaid_emis}}</div>
+        <div class="stat-detail">Total EMIs pending</div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Upcoming EMIs Card -->
+    <mat-card class="stat-card upcoming-emis" (click)="navigateToEmiPage()">
+      <mat-card-header>
+        <mat-icon class="stat-icon">upcoming</mat-icon>
+        <mat-card-title class="stat-title">Upcoming EMIs</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="stat-value">₹ {{stats.upcoming_emi_amount_on_next_due_date | number:'1.0-0'}}</div>
+        <div class="stat-detail">Upcoming Emi ({{stats.upcoming_emi_count_on_next_due_date}}) Amount On Next Due Date</div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Overdue  Card -->
+    <mat-card class="stat-card alerts-card" (click)="navigateToOverdueEmi()">
+      <mat-card-header>
+        <mat-icon class="stat-icon">notifications</mat-icon>
+        <mat-card-title class="stat-title">Overdue EMI Amount</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="stat-value">{{stats.overdue_emi_amount | number:'1.0-0'}}</div>
+        <div class="stat-detail">Overdue Emi ({{stats.overdue_emis}}) Amount</div>
+      </mat-card-content>
+    </mat-card>
+
   </div>
 </div> 
