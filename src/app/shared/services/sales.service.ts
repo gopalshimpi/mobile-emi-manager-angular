@@ -17,7 +17,7 @@ export class SalesService {
   getSalesRecords(page: any, perPage: any, search?: string): Observable<SalesRecord[]> { 
     let url = `${ApiUrl.backendUri}/sales?page=${page}&per_page=${perPage}`;
     if (search) {
-      url += `&quer=${search}`;
+      url += `&query=${search}`;
     }
     return this.requestService.get(url);
   }
