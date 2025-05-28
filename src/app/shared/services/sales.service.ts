@@ -3,7 +3,6 @@ import { RequestService } from '../requests/request.service';
 import { ApiUrl } from '../app-data.constant';
 import { SalesRecord } from '../models/sales-record.model';
 import { Observable } from 'rxjs';
-import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +17,7 @@ export class SalesService {
   getSalesRecords(page: any, perPage: any, search?: string): Observable<SalesRecord[]> { 
     let url = `${ApiUrl.backendUri}/sales?page=${page}&per_page=${perPage}`;
     if (search) {
-      url += `&customer_mobile_number=${search}`;
+      url += `&quer=${search}`;
     }
     return this.requestService.get(url);
   }

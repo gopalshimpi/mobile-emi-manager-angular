@@ -7,6 +7,7 @@ import { User } from '../models/user.model';
 import { Observable } from 'rxjs';
 import { HttpHeaders } from '@angular/common/http';
 import { DataSharingService } from './data-sharing.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,8 @@ export class AuthService {
   constructor(
     private requestService: RequestService,
     private storageService: StorageService,
-    private dataSharingService: DataSharingService
+    private dataSharingService: DataSharingService,
+    private router: Router
   ) { }
 
   login(user: any) {
@@ -31,6 +33,7 @@ export class AuthService {
     this.storageService.remove(AppConst.currentUserKey);
     this.storageService.remove(AppConst.token);
     this.dataSharingService.setAppHeader(false);
+    this.router.navigate(['/login']);
   }
 
   get isLoggedIn(): boolean {
